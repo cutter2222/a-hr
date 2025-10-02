@@ -58,4 +58,16 @@ class MissionsRow extends SupabaseDataRow {
 
   DateTime? get archivedAt => getField<DateTime>('archived_at');
   set archivedAt(DateTime? value) => setField<DateTime>('archived_at', value);
+
+  dynamic get content => getField<dynamic>('content');
+  set content(dynamic value) => setField<dynamic>('content', value);
+
+  bool get autoCheckEnabled => getField<bool>('auto_check_enabled')!;
+  set autoCheckEnabled(bool value) =>
+      setField<bool>('auto_check_enabled', value);
+
+  String? get autoCheckFunctionName =>
+      getField<String>('auto_check_function_name');
+  set autoCheckFunctionName(String? value) =>
+      setField<String>('auto_check_function_name', value);
 }

@@ -15,8 +15,6 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
   late ListItemModel listItemModel1;
   // Model for ListItem component.
   late ListItemModel listItemModel2;
-  // Model for ListItem component.
-  late ListItemModel listItemModel3;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   bool? dialogOutput;
   // Model for NavbarMobile component.
@@ -27,7 +25,6 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
     navbarDesktopModel = createModel(context, () => NavbarDesktopModel());
     listItemModel1 = createModel(context, () => ListItemModel());
     listItemModel2 = createModel(context, () => ListItemModel());
-    listItemModel3 = createModel(context, () => ListItemModel());
     navbarMobileModel = createModel(context, () => NavbarMobileModel());
   }
 
@@ -36,7 +33,6 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
     navbarDesktopModel.dispose();
     listItemModel1.dispose();
     listItemModel2.dispose();
-    listItemModel3.dispose();
     navbarMobileModel.dispose();
   }
 

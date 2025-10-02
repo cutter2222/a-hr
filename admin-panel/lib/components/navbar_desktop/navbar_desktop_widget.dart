@@ -159,7 +159,7 @@ class _NavbarDesktopWidgetState extends State<NavbarDesktopWidget> {
                   onTap: () async {
                     if (getCurrentRoute(context) != '/checkingMissions') {
                       context.pushNamed(
-                        CheckingMissionsWidget.routeName,
+                        MissionsCheckWidget.routeName,
                         extra: <String, dynamic>{
                           kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
@@ -179,12 +179,12 @@ class _NavbarDesktopWidgetState extends State<NavbarDesktopWidget> {
                       text: 'Проверка миссий',
                       icon: Icon(
                         Icons.task_alt,
-                        color: getCurrentRoute(context) == '/checkingMissions'
+                        color: getCurrentRoute(context) == '/missionsCheck'
                             ? FlutterFlowTheme.of(context).secondary
                             : FlutterFlowTheme.of(context).secondaryText,
                         size: 24.0,
                       ),
-                      isSelect: getCurrentRoute(context) == '/checkingMissions',
+                      isSelect: getCurrentRoute(context) == '/missionsCheck',
                     ),
                   ),
                 ),

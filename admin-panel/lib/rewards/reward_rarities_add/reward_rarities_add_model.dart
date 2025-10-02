@@ -3,10 +3,15 @@ import '/components/navbar_desktop/navbar_desktop_widget.dart';
 import '/components/navbar_mobile/navbar_mobile_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/index.dart';
 import 'reward_rarities_add_widget.dart' show RewardRaritiesAddWidget;
 import 'package:flutter/material.dart';
 
 class RewardRaritiesAddModel extends FlutterFlowModel<RewardRaritiesAddWidget> {
+  ///  Local state fields for this page.
+
+  String? color;
+
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
@@ -23,9 +28,10 @@ class RewardRaritiesAddModel extends FlutterFlowModel<RewardRaritiesAddWidget> {
   TextEditingController? descriptionInputTextController;
   String? Function(BuildContext, String?)?
       descriptionInputTextControllerValidator;
-  // State field(s) for RankInput widget.
-  String? rankInputValue;
-  FormFieldController<String>? rankInputValueController;
+  Color? colorPicked;
+  // State field(s) for StatusInput widget.
+  String? statusInputValue;
+  FormFieldController<String>? statusInputValueController;
   // Model for NavbarMobile component.
   late NavbarMobileModel navbarMobileModel;
 

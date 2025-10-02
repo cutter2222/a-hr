@@ -32,6 +32,12 @@ class ViewUsersRow extends SupabaseDataRow {
   String? get lastName => getField<String>('last_name');
   set lastName(String? value) => setField<String>('last_name', value);
 
+  String? get nickname => getField<String>('nickname');
+  set nickname(String? value) => setField<String>('nickname', value);
+
+  String? get aboutMe => getField<String>('about_me');
+  set aboutMe(String? value) => setField<String>('about_me', value);
+
   String? get gender => getField<String>('gender');
   set gender(String? value) => setField<String>('gender', value);
 

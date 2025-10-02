@@ -24,5 +24,5 @@ export '/rewards/reward_rarities_add/reward_rarities_add_widget.dart'
 export '/rewards/reward_rarities/reward_rarities_widget.dart'
     show RewardRaritiesWidget;
 export '/shop/purchases/purchases_widget.dart' show PurchasesWidget;
-export '/missions/checking_missions/checking_missions_widget.dart'
-    show CheckingMissionsWidget;
+export '/missions/missions_check/missions_check_widget.dart'
+    show MissionsCheckWidget;

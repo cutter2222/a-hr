@@ -29,9 +29,9 @@ class UserMissionsRow extends SupabaseDataRow {
   int get missionId => getField<int>('mission_id')!;
   set missionId(int value) => setField<int>('mission_id', value);
 
-  String? get status => getField<String>('status');
-  set status(String? value) => setField<String>('status', value);
-
   dynamic get playload => getField<dynamic>('playload');
   set playload(dynamic value) => setField<dynamic>('playload', value);
+
+  String get status => getField<String>('status')!;
+  set status(String value) => setField<String>('status', value);
 }

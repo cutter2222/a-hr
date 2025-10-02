@@ -31,7 +31,7 @@ class _DialogObjectRejectedReasonWidgetState
 
     _model.reasonInputTextController ??= TextEditingController();
     _model.reasonInputFocusNode ??= FocusNode();
-
+    _model.reasonInputFocusNode!.addListener(() => safeSetState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 

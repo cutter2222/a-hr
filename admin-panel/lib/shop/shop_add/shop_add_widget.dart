@@ -81,19 +81,19 @@ class _ShopAddWidgetState extends State<ShopAddWidget> {
 
     _model.nameInputTextController ??= TextEditingController();
     _model.nameInputFocusNode ??= FocusNode();
-
+    _model.nameInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.descriptionInputTextController ??= TextEditingController();
     _model.descriptionInputFocusNode ??= FocusNode();
-
+    _model.descriptionInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.priceInputTextController ??= TextEditingController();
     _model.priceInputFocusNode ??= FocusNode();
-
+    _model.priceInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.stockInputTextController ??= TextEditingController();
     _model.stockInputFocusNode ??= FocusNode();
-
+    _model.stockInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.limitInputTextController ??= TextEditingController();
     _model.limitInputFocusNode ??= FocusNode();
-
+    _model.limitInputFocusNode!.addListener(() => safeSetState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -139,7 +139,6 @@ class _ShopAddWidgetState extends State<ShopAddWidget> {
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
                         constraints: BoxConstraints(
                           maxWidth: double.infinity,
                         ),
@@ -1406,6 +1405,21 @@ class _ShopAddWidgetState extends State<ShopAddWidget> {
                                                       ),
                                                     );
                                                   }
+
+                                                  context.pushNamed(
+                                                    ShopWidget.routeName,
+                                                    extra: <String, dynamic>{
+                                                      kTransitionInfoKey:
+                                                          TransitionInfo(
+                                                        hasTransition: true,
+                                                        transitionType:
+                                                            PageTransitionType
+                                                                .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                      ),
+                                                    },
+                                                  );
                                                 },
                                                 text: 'Обновить',
                                                 options: FFButtonOptions(

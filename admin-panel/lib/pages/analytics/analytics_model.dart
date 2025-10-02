@@ -1,5 +1,3 @@
-import '/components/button_choice/button_choice_widget.dart';
-import '/components/button_icon/button_icon_widget.dart';
 import '/components/chart_widget.dart';
 import '/components/navbar_desktop/navbar_desktop_widget.dart';
 import '/components/navbar_mobile/navbar_mobile_widget.dart';
@@ -37,16 +35,6 @@ class AnalyticsModel extends FlutterFlowModel<AnalyticsWidget> {
 
   // Model for NavbarDesktop component.
   late NavbarDesktopModel navbarDesktopModel;
-  // Model for ButtonChoice component.
-  late ButtonChoiceModel buttonChoiceModel1;
-  // Model for ButtonChoice component.
-  late ButtonChoiceModel buttonChoiceModel2;
-  // Model for ButtonIcon component.
-  late ButtonIconModel buttonIconModel1;
-  DateTime? datePicked1;
-  // Model for ButtonIcon component.
-  late ButtonIconModel buttonIconModel2;
-  DateTime? datePicked2;
   // Model for Chart component.
   late ChartModel chartModel;
   // Model for NavbarMobile component.
@@ -55,10 +43,6 @@ class AnalyticsModel extends FlutterFlowModel<AnalyticsWidget> {
   @override
   void initState(BuildContext context) {
     navbarDesktopModel = createModel(context, () => NavbarDesktopModel());
-    buttonChoiceModel1 = createModel(context, () => ButtonChoiceModel());
-    buttonChoiceModel2 = createModel(context, () => ButtonChoiceModel());
-    buttonIconModel1 = createModel(context, () => ButtonIconModel());
-    buttonIconModel2 = createModel(context, () => ButtonIconModel());
     chartModel = createModel(context, () => ChartModel());
     navbarMobileModel = createModel(context, () => NavbarMobileModel());
   }
@@ -66,10 +50,6 @@ class AnalyticsModel extends FlutterFlowModel<AnalyticsWidget> {
   @override
   void dispose() {
     navbarDesktopModel.dispose();
-    buttonChoiceModel1.dispose();
-    buttonChoiceModel2.dispose();
-    buttonIconModel1.dispose();
-    buttonIconModel2.dispose();
     chartModel.dispose();
     navbarMobileModel.dispose();
   }

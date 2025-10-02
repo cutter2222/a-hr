@@ -34,10 +34,15 @@ class SkillsAddModel extends FlutterFlowModel<SkillsAddWidget> {
   // State field(s) for RankInput widget.
   String? rankInputValue;
   FormFieldController<String>? rankInputValueController;
-  bool isDataUploading_uploadDataM9s = false;
-  FFUploadedFile uploadedLocalFile_uploadDataM9s =
+  bool isDataUploading_uploadDataUpdate = false;
+  FFUploadedFile uploadedLocalFile_uploadDataUpdate =
       FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl_uploadDataM9s = '';
+  String uploadedFileUrl_uploadDataUpdate = '';
+
+  bool isDataUploading_uploadDatam9s = false;
+  FFUploadedFile uploadedLocalFile_uploadDatam9s =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl_uploadDatam9s = '';
 
   // Model for NavbarMobile component.
   late NavbarMobileModel navbarMobileModel;

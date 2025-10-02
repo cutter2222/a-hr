@@ -8,6 +8,8 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'lat_lng.dart';
 import 'place.dart';
 import 'uploaded_file.dart';
+import '/backend/schema/structs/index.dart';
+import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/auth/supabase_auth/auth_util.dart';
 
@@ -87,4 +89,49 @@ DateTime? dateTimeToEndDay(DateTime? dateTime) {
 
 List<double>? intListToDouble(List<int>? intList) {
   return intList!.map((number) => number.toDouble()).toList();
+}
+
+List<int> getIdsToDelete(
+  List<int>? initialList,
+  List<int>? currentList,
+) {
+  if (initialList == null || currentList == null) {
+    return [];
+  }
+  return initialList.where((id) => !currentList.contains(id)).toList();
+}
+
+List<int> getIdsToAdd(
+  List<int>? initialList,
+  List<int>? currentList,
+) {
+  if (initialList == null || currentList == null) {
+    return [];
+  }
+  return currentList.where((id) => !initialList.contains(id)).toList();
+}
+
+dynamic dynamicToJson(String? json) {
+  if (json == null) {
+    return null;
+  }
+  return json;
+}
+
+String? colorToString(Color color) {
+  return '#${color.value.toRadixString(16).padLeft(8, '0').toUpperCase()}';
+}
+
+String? stringToimage(String? image) {
+  if (image == null) {
+    return null;
+  }
+  return image;
+}
+
+String? stringToVideo(String? video) {
+  if (video == null) {
+    return null;
+  }
+  return video;
 }

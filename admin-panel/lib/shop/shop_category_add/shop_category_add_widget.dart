@@ -56,10 +56,10 @@ class _ShopCategoryAddWidgetState extends State<ShopCategoryAddWidget> {
 
     _model.nameInputTextController ??= TextEditingController();
     _model.nameInputFocusNode ??= FocusNode();
-
+    _model.nameInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.orderInputTextController ??= TextEditingController();
     _model.orderInputFocusNode ??= FocusNode();
-
+    _model.orderInputFocusNode!.addListener(() => safeSetState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -105,7 +105,6 @@ class _ShopCategoryAddWidgetState extends State<ShopCategoryAddWidget> {
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
                         constraints: BoxConstraints(
                           maxWidth: double.infinity,
                         ),
@@ -584,8 +583,13 @@ class _ShopCategoryAddWidgetState extends State<ShopCategoryAddWidget> {
                                                     isSearchable: false,
                                                     isMultiSelect: false,
                                                   ),
-                                                ].divide(
-                                                    SizedBox(height: 16.0)),
+                                                ]
+                                                    .divide(
+                                                        SizedBox(height: 16.0))
+                                                    .addToStart(
+                                                        SizedBox(height: 24.0))
+                                                    .addToEnd(
+                                                        SizedBox(height: 24.0)),
                                               ),
                                             ),
                                           ),

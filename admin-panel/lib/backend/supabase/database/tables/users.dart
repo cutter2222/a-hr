@@ -69,4 +69,28 @@ class UsersRow extends SupabaseDataRow {
 
   String? get gender => getField<String>('gender');
   set gender(String? value) => setField<String>('gender', value);
+
+  String? get nickname => getField<String>('nickname');
+  set nickname(String? value) => setField<String>('nickname', value);
+
+  String? get city => getField<String>('city');
+  set city(String? value) => setField<String>('city', value);
+
+  String? get qualities => getField<String>('qualities');
+  set qualities(String? value) => setField<String>('qualities', value);
+
+  String? get hobby => getField<String>('hobby');
+  set hobby(String? value) => setField<String>('hobby', value);
+
+  String? get training => getField<String>('training');
+  set training(String? value) => setField<String>('training', value);
+
+  String? get education => getField<String>('education');
+  set education(String? value) => setField<String>('education', value);
+
+  String? get worked => getField<String>('worked');
+  set worked(String? value) => setField<String>('worked', value);
+
+  String? get aboutMe => getField<String>('about_me');
+  set aboutMe(String? value) => setField<String>('about_me', value);
 }

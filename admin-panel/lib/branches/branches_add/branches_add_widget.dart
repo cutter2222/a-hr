@@ -69,13 +69,13 @@ class _BranchesAddWidgetState extends State<BranchesAddWidget> {
 
     _model.nameInputTextController ??= TextEditingController();
     _model.nameInputFocusNode ??= FocusNode();
-
+    _model.nameInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.descriptionInputTextController ??= TextEditingController();
     _model.descriptionInputFocusNode ??= FocusNode();
-
+    _model.descriptionInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.orderInputTextController ??= TextEditingController();
     _model.orderInputFocusNode ??= FocusNode();
-
+    _model.orderInputFocusNode!.addListener(() => safeSetState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 

@@ -32,7 +32,6 @@ schema.sql - полная структура
 | **user_reward_source** | `mission`, `shop`, `event`, `admin` |
 | **event_status** | `pending`, `in_progress`, `completed`, `moderation` |
 | **user_mission_status** | `pending`, `completed`, `failed` |
-| **user_mission_status2** | `in_progress`, `completed`, `failed`, `archived`, `submitted` |
 | **logbook_entity_type** | `purchase`, `mission`, `reward`, `skill`, `rank`, `level`, `event` |
 | **global_role** | `candidate`, `employee`, `all` |
 | **user_role** | `candidate`, `employee`, `admin`, `organizer`, `hr` |

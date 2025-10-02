@@ -1,5 +1,4 @@
-import '/components/button_choice/button_choice_widget.dart';
-import '/components/button_icon/button_icon_widget.dart';
+import '/backend/supabase/supabase.dart';
 import '/components/chart_widget.dart';
 import '/components/navbar_desktop/navbar_desktop_widget.dart';
 import '/components/navbar_mobile/navbar_mobile_widget.dart';
@@ -113,215 +112,63 @@ class _AnalyticsWidgetState extends State<AnalyticsWidget> {
                                               .labelMediumIsCustom,
                                     ),
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        _model.tab = 'users';
-                                        safeSetState(() {});
-                                      },
-                                      child: wrapWithModel(
-                                        model: _model.buttonChoiceModel1,
-                                        updateCallback: () =>
-                                            safeSetState(() {}),
-                                        child: ButtonChoiceWidget(
-                                          isPicked: _model.tab == 'users',
-                                          text: 'Пользователи',
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        _model.tab = 'objects';
-                                        safeSetState(() {});
-                                      },
-                                      child: wrapWithModel(
-                                        model: _model.buttonChoiceModel2,
-                                        updateCallback: () =>
-                                            safeSetState(() {}),
-                                        child: ButtonChoiceWidget(
-                                          isPicked: _model.tab == 'tracks',
-                                          text: 'Треки',
-                                        ),
-                                      ),
-                                    ),
-                                  ].divide(SizedBox(width: 8.0)),
-                                ),
-                              ),
-                              if ((_model.startDate != null) &&
-                                  (_model.endDate != null))
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          final _datePicked1Date =
-                                              await showDatePicker(
-                                            context: context,
-                                            initialDate: (_model.startDate ??
-                                                DateTime.now()),
-                                            firstDate: DateTime(1900),
-                                            lastDate: (_model.endDate ??
-                                                DateTime(2050)),
-                                          );
-
-                                          if (_datePicked1Date != null) {
-                                            safeSetState(() {
-                                              _model.datePicked1 = DateTime(
-                                                _datePicked1Date.year,
-                                                _datePicked1Date.month,
-                                                _datePicked1Date.day,
-                                              );
-                                            });
-                                          } else if (_model.datePicked1 !=
-                                              null) {
-                                            safeSetState(() {
-                                              _model.datePicked1 =
-                                                  _model.startDate;
-                                            });
-                                          }
-                                          if (_model.datePicked1 != null) {
-                                            _model.startDate =
-                                                _model.datePicked1;
-                                            safeSetState(() {});
-                                          } else {
-                                            return;
-                                          }
-                                        },
-                                        child: wrapWithModel(
-                                          model: _model.buttonIconModel1,
-                                          updateCallback: () =>
-                                              safeSetState(() {}),
-                                          child: ButtonIconWidget(
-                                            text: valueOrDefault<String>(
-                                              dateTimeFormat(
-                                                  "dd.MM.yy", _model.startDate),
-                                              'null',
-                                            ),
-                                            icon: Icon(
-                                              Icons.calendar_month,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              size: 14.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        '-',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily,
-                                              letterSpacing: 0.0,
-                                              useGoogleFonts:
-                                                  !FlutterFlowTheme.of(context)
-                                                      .bodyMediumIsCustom,
-                                            ),
-                                      ),
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          final _datePicked2Date =
-                                              await showDatePicker(
-                                            context: context,
-                                            initialDate: (_model.endDate ??
-                                                DateTime.now()),
-                                            firstDate: (_model.startDate ??
-                                                DateTime(1900)),
-                                            lastDate: DateTime(2050),
-                                          );
-
-                                          if (_datePicked2Date != null) {
-                                            safeSetState(() {
-                                              _model.datePicked2 = DateTime(
-                                                _datePicked2Date.year,
-                                                _datePicked2Date.month,
-                                                _datePicked2Date.day,
-                                              );
-                                            });
-                                          } else if (_model.datePicked2 !=
-                                              null) {
-                                            safeSetState(() {
-                                              _model.datePicked2 =
-                                                  _model.endDate;
-                                            });
-                                          }
-                                          if (_model.datePicked2 != null) {
-                                            _model.endDate = _model.datePicked2;
-                                            safeSetState(() {});
-                                          } else {
-                                            return;
-                                          }
-                                        },
-                                        child: wrapWithModel(
-                                          model: _model.buttonIconModel2,
-                                          updateCallback: () =>
-                                              safeSetState(() {}),
-                                          child: ButtonIconWidget(
-                                            text: valueOrDefault<String>(
-                                              dateTimeFormat(
-                                                  "dd.MM.yy", _model.endDate),
-                                              'null',
-                                            ),
-                                            icon: Icon(
-                                              Icons.calendar_month,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              size: 14.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ].divide(SizedBox(width: 4.0)),
-                                  ),
-                                ),
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 16.0, 0.0, 0.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        wrapWithModel(
-                                          model: _model.chartModel,
-                                          updateCallback: () =>
-                                              safeSetState(() {}),
-                                          child: ChartWidget(
-                                            axisX: _model.test2,
-                                            axisY: _model.test,
-                                          ),
-                                        ),
-                                      ],
+                                  child: FutureBuilder<
+                                      List<ViewNewUsersPerMonthRow>>(
+                                    future:
+                                        ViewNewUsersPerMonthTable().queryRows(
+                                      queryFn: (q) => q,
                                     ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<ViewNewUsersPerMonthRow>
+                                          viewNewUsersPerMonthViewNewUsersPerMonthRowList =
+                                          snapshot.data!;
+
+                                      return Container(
+                                        decoration: BoxDecoration(),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            wrapWithModel(
+                                              model: _model.chartModel,
+                                              updateCallback: () =>
+                                                  safeSetState(() {}),
+                                              child: ChartWidget(
+                                                axisX:
+                                                    viewNewUsersPerMonthViewNewUsersPerMonthRowList
+                                                        .map((e) => e.month)
+                                                        .withoutNulls
+                                                        .toList(),
+                                                axisY:
+                                                    viewNewUsersPerMonthViewNewUsersPerMonthRowList
+                                                        .map((e) => e.newUsers)
+                                                        .withoutNulls
+                                                        .toList(),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ),

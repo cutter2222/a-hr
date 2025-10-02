@@ -3,21 +3,21 @@ import '/components/navbar_desktop/navbar_desktop_widget.dart';
 import '/components/navbar_mobile/navbar_mobile_widget.dart';
 import '/flutter_flow/flutter_flow_data_table.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'checking_missions_widget.dart' show CheckingMissionsWidget;
+import 'missions_check_widget.dart' show MissionsCheckWidget;
 import 'package:flutter/material.dart';
 
-class CheckingMissionsModel extends FlutterFlowModel<CheckingMissionsWidget> {
+class MissionsCheckModel extends FlutterFlowModel<MissionsCheckWidget> {
+  ///  Local state fields for this page.
+
+  String statusFilter = 'pending';
+
   ///  State fields for stateful widgets in this page.
 
   // Model for NavbarDesktop component.
   late NavbarDesktopModel navbarDesktopModel;
-  // State field(s) for SearchInput widget.
-  FocusNode? searchInputFocusNode;
-  TextEditingController? searchInputTextController;
-  String? Function(BuildContext, String?)? searchInputTextControllerValidator;
   // State field(s) for PaginatedDataTable widget.
   final paginatedDataTableController =
-      FlutterFlowDataTableController<MissionsRow>();
+      FlutterFlowDataTableController<ViewUserMissionsRow>();
   // Model for NavbarMobile component.
   late NavbarMobileModel navbarMobileModel;
 
@@ -30,9 +30,6 @@ class CheckingMissionsModel extends FlutterFlowModel<CheckingMissionsWidget> {
   @override
   void dispose() {
     navbarDesktopModel.dispose();
-    searchInputFocusNode?.dispose();
-    searchInputTextController?.dispose();
-
     paginatedDataTableController.dispose();
     navbarMobileModel.dispose();
   }

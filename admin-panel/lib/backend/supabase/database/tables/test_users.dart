@@ -17,9 +17,6 @@ class TestUsersRow extends SupabaseDataRow {
   int get id => getField<int>('id')!;
   set id(int value) => setField<int>('id', value);
 
-  int? get orderIndex => getField<int>('order_index');
-  set orderIndex(int? value) => setField<int>('order_index', value);
-
   String? get login => getField<String>('login');
   set login(String? value) => setField<String>('login', value);
 

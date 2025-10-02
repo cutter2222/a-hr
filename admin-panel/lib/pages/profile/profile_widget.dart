@@ -76,7 +76,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -150,18 +149,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                 label: 'id аккаунта',
                                                 value: valueOrDefault<String>(
                                                   currentUserUid,
-                                                  'null',
-                                                ),
-                                              ),
-                                            ),
-                                            wrapWithModel(
-                                              model: _model.listItemModel3,
-                                              updateCallback: () =>
-                                                  safeSetState(() {}),
-                                              child: ListItemWidget(
-                                                label: 'Роль',
-                                                value: valueOrDefault<String>(
-                                                  currentPhoneNumber,
                                                   'null',
                                                 ),
                                               ),

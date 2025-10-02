@@ -8,6 +8,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/upload_data.dart';
+import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -60,13 +62,13 @@ class _RewardsAddWidgetState extends State<RewardsAddWidget> {
 
     _model.nameInputTextController ??= TextEditingController();
     _model.nameInputFocusNode ??= FocusNode();
-
+    _model.nameInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.descriptionInputTextController ??= TextEditingController();
     _model.descriptionInputFocusNode ??= FocusNode();
-
+    _model.descriptionInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.howToGetInputTextController ??= TextEditingController();
     _model.howToGetInputFocusNode ??= FocusNode();
-
+    _model.howToGetInputFocusNode!.addListener(() => safeSetState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -112,7 +114,6 @@ class _RewardsAddWidgetState extends State<RewardsAddWidget> {
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
                         constraints: BoxConstraints(
                           maxWidth: double.infinity,
                         ),
@@ -754,8 +755,13 @@ class _RewardsAddWidgetState extends State<RewardsAddWidget> {
                                                     isSearchable: false,
                                                     isMultiSelect: false,
                                                   ),
-                                                ].divide(
-                                                    SizedBox(height: 16.0)),
+                                                ]
+                                                    .divide(
+                                                        SizedBox(height: 16.0))
+                                                    .addToStart(
+                                                        SizedBox(height: 24.0))
+                                                    .addToEnd(
+                                                        SizedBox(height: 24.0)),
                                               ),
                                             ),
                                           ),
@@ -769,8 +775,127 @@ class _RewardsAddWidgetState extends State<RewardsAddWidget> {
                                                   .fromSTEB(
                                                       0.0, 16.0, 0.0, 0.0),
                                               child: FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
+                                                onPressed: () async {
+                                                  if ((_model
+                                                              .uploadImageNewModel
+                                                              .uploadedLocalFile_uploadDataC3c
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false)) {
+                                                    {
+                                                      safeSetState(() => _model
+                                                              .isDataUploading_uploadDataOdy =
+                                                          true);
+                                                      var selectedUploadedFiles =
+                                                          <FFUploadedFile>[];
+                                                      var selectedMedia =
+                                                          <SelectedFile>[];
+                                                      var downloadUrls =
+                                                          <String>[];
+                                                      try {
+                                                        selectedUploadedFiles = _model
+                                                                .uploadImageNewModel
+                                                                .uploadedLocalFile_uploadDataC3c
+                                                                .bytes!
+                                                                .isNotEmpty
+                                                            ? [
+                                                                _model
+                                                                    .uploadImageNewModel
+                                                                    .uploadedLocalFile_uploadDataC3c
+                                                              ]
+                                                            : <FFUploadedFile>[];
+                                                        selectedMedia =
+                                                            selectedFilesFromUploadedFiles(
+                                                          selectedUploadedFiles,
+                                                          storageFolderPath:
+                                                              'rewards',
+                                                        );
+                                                        downloadUrls =
+                                                            await uploadSupabaseStorageFiles(
+                                                          bucketName: 'media',
+                                                          selectedFiles:
+                                                              selectedMedia,
+                                                        );
+                                                      } finally {
+                                                        _model.isDataUploading_uploadDataOdy =
+                                                            false;
+                                                      }
+                                                      if (selectedUploadedFiles
+                                                                  .length ==
+                                                              selectedMedia
+                                                                  .length &&
+                                                          downloadUrls.length ==
+                                                              selectedMedia
+                                                                  .length) {
+                                                        safeSetState(() {
+                                                          _model.uploadedLocalFile_uploadDataOdy =
+                                                              selectedUploadedFiles
+                                                                  .first;
+                                                          _model.uploadedFileUrl_uploadDataOdy =
+                                                              downloadUrls
+                                                                  .first;
+                                                        });
+                                                      } else {
+                                                        safeSetState(() {});
+                                                        return;
+                                                      }
+                                                    }
+
+                                                    await RewardsTable().update(
+                                                      data: {
+                                                        'name': _model
+                                                            .nameInputTextController
+                                                            .text,
+                                                        'description': _model
+                                                            .descriptionInputTextController
+                                                            .text,
+                                                        'how_to_get': _model
+                                                            .howToGetInputTextController
+                                                            .text,
+                                                        'image_url': _model
+                                                            .uploadedFileUrl_uploadDataOdy,
+                                                      },
+                                                      matchingRows: (rows) =>
+                                                          rows.eqOrNull(
+                                                        'id',
+                                                        widget.rewardsRow?.id,
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    await RewardsTable().update(
+                                                      data: {
+                                                        'name': _model
+                                                            .nameInputTextController
+                                                            .text,
+                                                        'description': _model
+                                                            .descriptionInputTextController
+                                                            .text,
+                                                        'how_to_get': _model
+                                                            .howToGetInputTextController
+                                                            .text,
+                                                      },
+                                                      matchingRows: (rows) =>
+                                                          rows.eqOrNull(
+                                                        'id',
+                                                        widget.rewardsRow?.id,
+                                                      ),
+                                                    );
+                                                  }
+
+                                                  context.pushNamed(
+                                                    RewardsWidget.routeName,
+                                                    extra: <String, dynamic>{
+                                                      kTransitionInfoKey:
+                                                          TransitionInfo(
+                                                        hasTransition: true,
+                                                        transitionType:
+                                                            PageTransitionType
+                                                                .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                      ),
+                                                    },
+                                                  );
                                                 },
                                                 text: 'Обновить',
                                                 options: FFButtonOptions(
@@ -814,46 +939,159 @@ class _RewardsAddWidgetState extends State<RewardsAddWidget> {
                                               ),
                                             );
                                           } else {
-                                            return FFButtonWidget(
-                                              onPressed: () {
-                                                print('Button pressed ...');
-                                              },
-                                              text: 'Сохранить',
-                                              options: FFButtonOptions(
-                                                width: double.infinity,
-                                                height: 52.0,
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 0.0, 16.0, 0.0),
-                                                iconPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMediumFamily,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryBackground,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          useGoogleFonts:
-                                                              !FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMediumIsCustom,
-                                                        ),
-                                                elevation: 0.0,
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
+                                            return Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                              child: FFButtonWidget(
+                                                onPressed: () async {
+                                                  if ((_model
+                                                              .uploadImageNewModel
+                                                              .uploadedLocalFile_uploadDataC3c
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false)) {
+                                                    {
+                                                      safeSetState(() => _model
+                                                              .isDataUploading_uploadDataSave =
+                                                          true);
+                                                      var selectedUploadedFiles =
+                                                          <FFUploadedFile>[];
+                                                      var selectedMedia =
+                                                          <SelectedFile>[];
+                                                      var downloadUrls =
+                                                          <String>[];
+                                                      try {
+                                                        selectedUploadedFiles = _model
+                                                                .uploadImageNewModel
+                                                                .uploadedLocalFile_uploadDataC3c
+                                                                .bytes!
+                                                                .isNotEmpty
+                                                            ? [
+                                                                _model
+                                                                    .uploadImageNewModel
+                                                                    .uploadedLocalFile_uploadDataC3c
+                                                              ]
+                                                            : <FFUploadedFile>[];
+                                                        selectedMedia =
+                                                            selectedFilesFromUploadedFiles(
+                                                          selectedUploadedFiles,
+                                                          storageFolderPath:
+                                                              'rewards',
+                                                        );
+                                                        downloadUrls =
+                                                            await uploadSupabaseStorageFiles(
+                                                          bucketName: 'media',
+                                                          selectedFiles:
+                                                              selectedMedia,
+                                                        );
+                                                      } finally {
+                                                        _model.isDataUploading_uploadDataSave =
+                                                            false;
+                                                      }
+                                                      if (selectedUploadedFiles
+                                                                  .length ==
+                                                              selectedMedia
+                                                                  .length &&
+                                                          downloadUrls.length ==
+                                                              selectedMedia
+                                                                  .length) {
+                                                        safeSetState(() {
+                                                          _model.uploadedLocalFile_uploadDataSave =
+                                                              selectedUploadedFiles
+                                                                  .first;
+                                                          _model.uploadedFileUrl_uploadDataSave =
+                                                              downloadUrls
+                                                                  .first;
+                                                        });
+                                                      } else {
+                                                        safeSetState(() {});
+                                                        return;
+                                                      }
+                                                    }
+
+                                                    await RewardsTable()
+                                                        .insert({
+                                                      'name': _model
+                                                          .nameInputTextController
+                                                          .text,
+                                                      'description': _model
+                                                          .descriptionInputTextController
+                                                          .text,
+                                                      'how_to_get': _model
+                                                          .howToGetInputTextController
+                                                          .text,
+                                                      'image_url': _model
+                                                          .uploadedFileUrl_uploadDataSave,
+                                                    });
+                                                  } else {
+                                                    await RewardsTable()
+                                                        .insert({
+                                                      'name': _model
+                                                          .nameInputTextController
+                                                          .text,
+                                                      'description': _model
+                                                          .descriptionInputTextController
+                                                          .text,
+                                                      'how_to_get': _model
+                                                          .howToGetInputTextController
+                                                          .text,
+                                                    });
+                                                  }
+
+                                                  context.pushNamed(
+                                                    RewardsWidget.routeName,
+                                                    extra: <String, dynamic>{
+                                                      kTransitionInfoKey:
+                                                          TransitionInfo(
+                                                        hasTransition: true,
+                                                        transitionType:
+                                                            PageTransitionType
+                                                                .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                      ),
+                                                    },
+                                                  );
+                                                },
+                                                text: 'Сохранить',
+                                                options: FFButtonOptions(
+                                                  width: double.infinity,
+                                                  height: 52.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          16.0, 0.0, 16.0, 0.0),
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  textStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryBackground,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumIsCustom,
+                                                          ),
+                                                  elevation: 0.0,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
                                               ),
                                             );
                                           }

@@ -11,10 +11,6 @@ class PurchasesModel extends FlutterFlowModel<PurchasesWidget> {
 
   // Model for NavbarDesktop component.
   late NavbarDesktopModel navbarDesktopModel;
-  // State field(s) for SearchInput widget.
-  FocusNode? searchInputFocusNode;
-  TextEditingController? searchInputTextController;
-  String? Function(BuildContext, String?)? searchInputTextControllerValidator;
   // State field(s) for PaginatedDataTable widget.
   final paginatedDataTableController =
       FlutterFlowDataTableController<ShopProductsRow>();
@@ -30,9 +26,6 @@ class PurchasesModel extends FlutterFlowModel<PurchasesWidget> {
   @override
   void dispose() {
     navbarDesktopModel.dispose();
-    searchInputFocusNode?.dispose();
-    searchInputTextController?.dispose();
-
     paginatedDataTableController.dispose();
     navbarMobileModel.dispose();
   }

@@ -76,7 +76,7 @@ class _ListItemWidgetState extends State<ListItemWidget> {
                   child: Text(
                     valueOrDefault<String>(
                       widget.value,
-                      'null',
+                      'нет данных',
                     ),
                     textAlign: TextAlign.end,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(

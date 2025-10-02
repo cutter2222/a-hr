@@ -4,6 +4,7 @@ import '/components/navbar_mobile/navbar_mobile_widget.dart';
 import '/components/upload_image_new_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/index.dart';
 import 'rewards_add_widget.dart' show RewardsAddWidget;
 import 'package:flutter/material.dart';
 
@@ -33,6 +34,16 @@ class RewardsAddModel extends FlutterFlowModel<RewardsAddWidget> {
   // State field(s) for RankInput widget.
   String? rankInputValue;
   FormFieldController<String>? rankInputValueController;
+  bool isDataUploading_uploadDataOdy = false;
+  FFUploadedFile uploadedLocalFile_uploadDataOdy =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl_uploadDataOdy = '';
+
+  bool isDataUploading_uploadDataSave = false;
+  FFUploadedFile uploadedLocalFile_uploadDataSave =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl_uploadDataSave = '';
+
   // Model for NavbarMobile component.
   late NavbarMobileModel navbarMobileModel;
 

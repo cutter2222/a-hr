@@ -35,6 +35,9 @@ class ViewMissionsRow extends SupabaseDataRow {
   String? get type => getField<String>('type');
   set type(String? value) => setField<String>('type', value);
 
+  dynamic get content => getField<dynamic>('content');
+  set content(dynamic value) => setField<dynamic>('content', value);
+
   String? get userMissionsStatus => getField<String>('user_missions_status');
   set userMissionsStatus(String? value) =>
       setField<String>('user_missions_status', value);
@@ -56,6 +59,15 @@ class ViewMissionsRow extends SupabaseDataRow {
 
   DateTime? get archivedAt => getField<DateTime>('archived_at');
   set archivedAt(DateTime? value) => setField<DateTime>('archived_at', value);
+
+  bool? get autoCheckEnabled => getField<bool>('auto_check_enabled');
+  set autoCheckEnabled(bool? value) =>
+      setField<bool>('auto_check_enabled', value);
+
+  String? get autoCheckFunctionName =>
+      getField<String>('auto_check_function_name');
+  set autoCheckFunctionName(String? value) =>
+      setField<String>('auto_check_function_name', value);
 
   String? get requiredRankName => getField<String>('required_rank_name');
   set requiredRankName(String? value) =>

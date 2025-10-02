@@ -15,10 +15,6 @@ class RewardsModel extends FlutterFlowModel<RewardsWidget> {
   late NavbarDesktopModel navbarDesktopModel;
   // Model for Button component.
   late ButtonModel buttonModel;
-  // State field(s) for SearchInput widget.
-  FocusNode? searchInputFocusNode;
-  TextEditingController? searchInputTextController;
-  String? Function(BuildContext, String?)? searchInputTextControllerValidator;
   // State field(s) for PaginatedDataTable widget.
   final paginatedDataTableController =
       FlutterFlowDataTableController<RewardsRow>();
@@ -36,9 +32,6 @@ class RewardsModel extends FlutterFlowModel<RewardsWidget> {
   void dispose() {
     navbarDesktopModel.dispose();
     buttonModel.dispose();
-    searchInputFocusNode?.dispose();
-    searchInputTextController?.dispose();
-
     paginatedDataTableController.dispose();
     navbarMobileModel.dispose();
   }

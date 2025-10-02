@@ -62,13 +62,13 @@ class _SkillsAddWidgetState extends State<SkillsAddWidget> {
 
     _model.nameInputTextController ??= TextEditingController();
     _model.nameInputFocusNode ??= FocusNode();
-
+    _model.nameInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.descriptionInputTextController ??= TextEditingController();
     _model.descriptionInputFocusNode ??= FocusNode();
-
+    _model.descriptionInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.limitInputTextController ??= TextEditingController();
     _model.limitInputFocusNode ??= FocusNode();
-
+    _model.limitInputFocusNode!.addListener(() => safeSetState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -114,7 +114,6 @@ class _SkillsAddWidgetState extends State<SkillsAddWidget> {
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
                         constraints: BoxConstraints(
                           maxWidth: double.infinity,
                         ),
@@ -756,8 +755,13 @@ class _SkillsAddWidgetState extends State<SkillsAddWidget> {
                                                     isSearchable: false,
                                                     isMultiSelect: false,
                                                   ),
-                                                ].divide(
-                                                    SizedBox(height: 16.0)),
+                                                ]
+                                                    .divide(
+                                                        SizedBox(height: 16.0))
+                                                    .addToStart(
+                                                        SizedBox(height: 24.0))
+                                                    .addToEnd(
+                                                        SizedBox(height: 24.0)),
                                               ),
                                             ),
                                           ),
@@ -770,8 +774,130 @@ class _SkillsAddWidgetState extends State<SkillsAddWidget> {
                                           builder: (context) {
                                             if (widget.skillRow != null) {
                                               return FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
+                                                onPressed: () async {
+                                                  if ((_model
+                                                              .uploadImageNewModel
+                                                              .uploadedLocalFile_uploadDataC3c
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false)) {
+                                                    {
+                                                      safeSetState(() => _model
+                                                              .isDataUploading_uploadDataUpdate =
+                                                          true);
+                                                      var selectedUploadedFiles =
+                                                          <FFUploadedFile>[];
+                                                      var selectedMedia =
+                                                          <SelectedFile>[];
+                                                      var downloadUrls =
+                                                          <String>[];
+                                                      try {
+                                                        selectedUploadedFiles = _model
+                                                                .uploadImageNewModel
+                                                                .image!
+                                                                .bytes!
+                                                                .isNotEmpty
+                                                            ? [
+                                                                _model
+                                                                    .uploadImageNewModel
+                                                                    .image!
+                                                              ]
+                                                            : <FFUploadedFile>[];
+                                                        selectedMedia =
+                                                            selectedFilesFromUploadedFiles(
+                                                          selectedUploadedFiles,
+                                                          storageFolderPath:
+                                                              'skills',
+                                                        );
+                                                        downloadUrls =
+                                                            await uploadSupabaseStorageFiles(
+                                                          bucketName: 'media',
+                                                          selectedFiles:
+                                                              selectedMedia,
+                                                        );
+                                                      } finally {
+                                                        _model.isDataUploading_uploadDataUpdate =
+                                                            false;
+                                                      }
+                                                      if (selectedUploadedFiles
+                                                                  .length ==
+                                                              selectedMedia
+                                                                  .length &&
+                                                          downloadUrls.length ==
+                                                              selectedMedia
+                                                                  .length) {
+                                                        safeSetState(() {
+                                                          _model.uploadedLocalFile_uploadDataUpdate =
+                                                              selectedUploadedFiles
+                                                                  .first;
+                                                          _model.uploadedFileUrl_uploadDataUpdate =
+                                                              downloadUrls
+                                                                  .first;
+                                                        });
+                                                      } else {
+                                                        safeSetState(() {});
+                                                        return;
+                                                      }
+                                                    }
+
+                                                    await SkillsTable().update(
+                                                      data: {
+                                                        'name': _model
+                                                            .nameInputTextController
+                                                            .text,
+                                                        'description': _model
+                                                            .descriptionInputTextController
+                                                            .text,
+                                                        'image_url': _model
+                                                            .uploadedFileUrl_uploadDataUpdate,
+                                                        'skill_max_points':
+                                                            double.tryParse(_model
+                                                                .limitInputTextController
+                                                                .text),
+                                                      },
+                                                      matchingRows: (rows) =>
+                                                          rows.eqOrNull(
+                                                        'id',
+                                                        widget.skillRow?.id,
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    await SkillsTable().update(
+                                                      data: {
+                                                        'name': _model
+                                                            .nameInputTextController
+                                                            .text,
+                                                        'description': _model
+                                                            .descriptionInputTextController
+                                                            .text,
+                                                        'image_url': '',
+                                                        'skill_max_points':
+                                                            double.tryParse(_model
+                                                                .limitInputTextController
+                                                                .text),
+                                                      },
+                                                      matchingRows: (rows) =>
+                                                          rows.eqOrNull(
+                                                        'id',
+                                                        widget.skillRow?.id,
+                                                      ),
+                                                    );
+                                                  }
+
+                                                  context.goNamed(
+                                                    SkillsWidget.routeName,
+                                                    extra: <String, dynamic>{
+                                                      kTransitionInfoKey:
+                                                          TransitionInfo(
+                                                        hasTransition: true,
+                                                        transitionType:
+                                                            PageTransitionType
+                                                                .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                      ),
+                                                    },
+                                                  );
                                                 },
                                                 text: 'Обновить',
                                                 options: FFButtonOptions(
@@ -816,78 +942,99 @@ class _SkillsAddWidgetState extends State<SkillsAddWidget> {
                                             } else {
                                               return FFButtonWidget(
                                                 onPressed: () async {
-                                                  {
-                                                    safeSetState(() => _model
-                                                            .isDataUploading_uploadDataM9s =
-                                                        true);
-                                                    var selectedUploadedFiles =
-                                                        <FFUploadedFile>[];
-                                                    var selectedMedia =
-                                                        <SelectedFile>[];
-                                                    var downloadUrls =
-                                                        <String>[];
-                                                    try {
-                                                      selectedUploadedFiles = _model
+                                                  if ((_model
                                                               .uploadImageNewModel
                                                               .uploadedLocalFile_uploadDataC3c
-                                                              .bytes!
-                                                              .isNotEmpty
-                                                          ? [
-                                                              _model
-                                                                  .uploadImageNewModel
-                                                                  .uploadedLocalFile_uploadDataC3c
-                                                            ]
-                                                          : <FFUploadedFile>[];
-                                                      selectedMedia =
-                                                          selectedFilesFromUploadedFiles(
-                                                        selectedUploadedFiles,
-                                                        storageFolderPath:
-                                                            'skills',
-                                                      );
-                                                      downloadUrls =
-                                                          await uploadSupabaseStorageFiles(
-                                                        bucketName: 'media',
-                                                        selectedFiles:
-                                                            selectedMedia,
-                                                      );
-                                                    } finally {
-                                                      _model.isDataUploading_uploadDataM9s =
-                                                          false;
+                                                              .bytes
+                                                              ?.isNotEmpty ??
+                                                          false)) {
+                                                    {
+                                                      safeSetState(() => _model
+                                                              .isDataUploading_uploadDatam9s =
+                                                          true);
+                                                      var selectedUploadedFiles =
+                                                          <FFUploadedFile>[];
+                                                      var selectedMedia =
+                                                          <SelectedFile>[];
+                                                      var downloadUrls =
+                                                          <String>[];
+                                                      try {
+                                                        selectedUploadedFiles = _model
+                                                                .uploadImageNewModel
+                                                                .uploadedLocalFile_uploadDataC3c
+                                                                .bytes!
+                                                                .isNotEmpty
+                                                            ? [
+                                                                _model
+                                                                    .uploadImageNewModel
+                                                                    .uploadedLocalFile_uploadDataC3c
+                                                              ]
+                                                            : <FFUploadedFile>[];
+                                                        selectedMedia =
+                                                            selectedFilesFromUploadedFiles(
+                                                          selectedUploadedFiles,
+                                                          storageFolderPath:
+                                                              'skills',
+                                                        );
+                                                        downloadUrls =
+                                                            await uploadSupabaseStorageFiles(
+                                                          bucketName: 'media',
+                                                          selectedFiles:
+                                                              selectedMedia,
+                                                        );
+                                                      } finally {
+                                                        _model.isDataUploading_uploadDatam9s =
+                                                            false;
+                                                      }
+                                                      if (selectedUploadedFiles
+                                                                  .length ==
+                                                              selectedMedia
+                                                                  .length &&
+                                                          downloadUrls.length ==
+                                                              selectedMedia
+                                                                  .length) {
+                                                        safeSetState(() {
+                                                          _model.uploadedLocalFile_uploadDatam9s =
+                                                              selectedUploadedFiles
+                                                                  .first;
+                                                          _model.uploadedFileUrl_uploadDatam9s =
+                                                              downloadUrls
+                                                                  .first;
+                                                        });
+                                                      } else {
+                                                        safeSetState(() {});
+                                                        return;
+                                                      }
                                                     }
-                                                    if (selectedUploadedFiles
-                                                                .length ==
-                                                            selectedMedia
-                                                                .length &&
-                                                        downloadUrls.length ==
-                                                            selectedMedia
-                                                                .length) {
-                                                      safeSetState(() {
-                                                        _model.uploadedLocalFile_uploadDataM9s =
-                                                            selectedUploadedFiles
-                                                                .first;
-                                                        _model.uploadedFileUrl_uploadDataM9s =
-                                                            downloadUrls.first;
-                                                      });
-                                                    } else {
-                                                      safeSetState(() {});
-                                                      return;
-                                                    }
-                                                  }
 
-                                                  await SkillsTable().insert({
-                                                    'name': _model
-                                                        .nameInputTextController
-                                                        .text,
-                                                    'description': _model
-                                                        .descriptionInputTextController
-                                                        .text,
-                                                    'skill_max_points':
-                                                        double.tryParse(_model
-                                                            .limitInputTextController
-                                                            .text),
-                                                    'image_url': _model
-                                                        .uploadedFileUrl_uploadDataM9s,
-                                                  });
+                                                    await SkillsTable().insert({
+                                                      'name': _model
+                                                          .nameInputTextController
+                                                          .text,
+                                                      'description': _model
+                                                          .descriptionInputTextController
+                                                          .text,
+                                                      'skill_max_points':
+                                                          double.tryParse(_model
+                                                              .limitInputTextController
+                                                              .text),
+                                                      'image_url': _model
+                                                          .uploadedFileUrl_uploadDatam9s,
+                                                    });
+                                                  } else {
+                                                    await SkillsTable().insert({
+                                                      'name': _model
+                                                          .nameInputTextController
+                                                          .text,
+                                                      'description': _model
+                                                          .descriptionInputTextController
+                                                          .text,
+                                                      'skill_max_points':
+                                                          double.tryParse(_model
+                                                              .limitInputTextController
+                                                              .text),
+                                                    });
+                                                  }
 
                                                   context.goNamed(
                                                     SkillsWidget.routeName,

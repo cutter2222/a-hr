@@ -15,10 +15,6 @@ class ShopModel extends FlutterFlowModel<ShopWidget> {
   late NavbarDesktopModel navbarDesktopModel;
   // Model for Button component.
   late ButtonModel buttonModel;
-  // State field(s) for SearchInput widget.
-  FocusNode? searchInputFocusNode;
-  TextEditingController? searchInputTextController;
-  String? Function(BuildContext, String?)? searchInputTextControllerValidator;
   // State field(s) for PaginatedDataTable widget.
   final paginatedDataTableController =
       FlutterFlowDataTableController<ShopProductsRow>();
@@ -36,9 +32,6 @@ class ShopModel extends FlutterFlowModel<ShopWidget> {
   void dispose() {
     navbarDesktopModel.dispose();
     buttonModel.dispose();
-    searchInputFocusNode?.dispose();
-    searchInputTextController?.dispose();
-
     paginatedDataTableController.dispose();
     navbarMobileModel.dispose();
   }

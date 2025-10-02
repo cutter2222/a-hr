@@ -7,6 +7,8 @@ class UploadImageNewModel extends FlutterFlowModel<UploadImageNewWidget> {
 
   FFUploadedFile? image;
 
+  String? imageUrl = 'null';
+
   ///  State fields for stateful widgets in this component.
 
   bool isDataUploading_uploadDataC3c = false;

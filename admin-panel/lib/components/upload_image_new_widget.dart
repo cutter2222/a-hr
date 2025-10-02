@@ -2,6 +2,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'upload_image_new_model.dart';
 export 'upload_image_new_model.dart';
 
@@ -31,6 +32,12 @@ class _UploadImageNewWidgetState extends State<UploadImageNewWidget> {
     super.initState();
     _model = createModel(context, () => UploadImageNewModel());
 
+    // On component load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.imageUrl = widget.imageUrl;
+      safeSetState(() {});
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -48,6 +55,15 @@ class _UploadImageNewWidgetState extends State<UploadImageNewWidget> {
       height: 220.0,
       child: Stack(
         children: [
+          if (_model.image == null || (_model.image?.bytes?.isEmpty ?? true))
+            Align(
+              alignment: AlignmentDirectional(0.0, 0.0),
+              child: Icon(
+                Icons.add,
+                color: FlutterFlowTheme.of(context).primaryText,
+                size: 32.0,
+              ),
+            ),
           Align(
             alignment: AlignmentDirectional(0.0, 0.0),
             child: InkWell(
@@ -137,13 +153,20 @@ class _UploadImageNewWidgetState extends State<UploadImageNewWidget> {
                         ),
                       );
                     } else {
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          widget.imageUrl!,
-                          width: double.infinity,
-                          height: double.infinity,
-                          fit: BoxFit.cover,
+                      return Visibility(
+                        visible:
+                            _model.imageUrl != null && _model.imageUrl != '',
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            valueOrDefault<String>(
+                              _model.imageUrl,
+                              'null',
+                            ),
+                            width: double.infinity,
+                            height: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       );
                     }
@@ -161,6 +184,7 @@ class _UploadImageNewWidgetState extends State<UploadImageNewWidget> {
               highlightColor: Colors.transparent,
               onTap: () async {
                 _model.image = null;
+                _model.imageUrl = 'null';
                 _model.updatePage(() {});
               },
               child: Container(
@@ -177,15 +201,6 @@ class _UploadImageNewWidgetState extends State<UploadImageNewWidget> {
               ),
             ),
           ),
-          if (_model.image == null || (_model.image?.bytes?.isEmpty ?? true))
-            Align(
-              alignment: AlignmentDirectional(0.0, 0.0),
-              child: Icon(
-                Icons.add,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 32.0,
-              ),
-            ),
         ],
       ),
     );

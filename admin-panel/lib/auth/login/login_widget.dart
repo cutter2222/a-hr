@@ -31,10 +31,10 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     _model.emailInputTextController ??= TextEditingController();
     _model.emailInputFocusNode ??= FocusNode();
-
+    _model.emailInputFocusNode!.addListener(() => safeSetState(() {}));
     _model.passwordInputTextController ??= TextEditingController();
     _model.passwordInputFocusNode ??= FocusNode();
-
+    _model.passwordInputFocusNode!.addListener(() => safeSetState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 

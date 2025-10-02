@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:from_css_color/from_css_color.dart';
 
+import '/backend/schema/structs/index.dart';
+import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 
 import '../../flutter_flow/place.dart';
@@ -70,6 +71,12 @@ String? serializeParam(
         data = uploadedFileToString(param as FFUploadedFile);
       case ParamType.JSON:
         data = json.encode(param);
+
+      case ParamType.DataStruct:
+        data = param is BaseStruct ? param.serialize() : null;
+
+      case ParamType.Enum:
+        data = (param is Enum) ? param.serialize() : null;
 
       case ParamType.SupabaseRow:
         return json.encode((param as SupabaseDataRow).data);
@@ -150,14 +157,17 @@ enum ParamType {
   FFUploadedFile,
   JSON,
 
+  DataStruct,
+  Enum,
   SupabaseRow,
 }
 
 dynamic deserializeParam<T>(
   String? param,
   ParamType paramType,
-  bool isList,
-) {
+  bool isList, {
+  StructBuilder<T>? structBuilder,
+}) {
   try {
     if (param == null) {
       return null;
@@ -170,7 +180,12 @@ dynamic deserializeParam<T>(
       return paramValues
           .where((p) => p is String)
           .map((p) => p as String)
-          .map((p) => deserializeParam<T>(p, paramType, false))
+          .map((p) => deserializeParam<T>(
+                p,
+                paramType,
+                false,
+                structBuilder: structBuilder,
+              ))
           .where((p) => p != null)
           .map((p) => p! as T)
           .toList();
@@ -217,6 +232,8 @@ dynamic deserializeParam<T>(
             return MissionSkillsRow(data);
           case ViewTopUsersMonthRow:
             return ViewTopUsersMonthRow(data);
+          case ViewUserMissionsRow:
+            return ViewUserMissionsRow(data);
           case ViewSkillsRow:
             return ViewSkillsRow(data);
           case ViewRewardsRow:
@@ -229,6 +246,10 @@ dynamic deserializeParam<T>(
             return MissionRequiredMissionsRow(data);
           case ViewMissionsRow:
             return ViewMissionsRow(data);
+          case ViewMissionSkillsRow:
+            return ViewMissionSkillsRow(data);
+          case ViewMissionRequiredSkillsRow:
+            return ViewMissionRequiredSkillsRow(data);
           case UserPurchasesRow:
             return UserPurchasesRow(data);
           case MissionRewardsRow:
@@ -255,6 +276,8 @@ dynamic deserializeParam<T>(
             return UserRewardsRow(data);
           case SkillsRow:
             return SkillsRow(data);
+          case ViewNewUsersPerMonthRow:
+            return ViewNewUsersPerMonthRow(data);
           case MissionRequiredSkillsRow:
             return MissionRequiredSkillsRow(data);
           case TestUsersRow:
@@ -286,6 +309,13 @@ dynamic deserializeParam<T>(
           default:
             return null;
         }
+
+      case ParamType.DataStruct:
+        final data = json.decode(param) as Map<String, dynamic>? ?? {};
+        return structBuilder != null ? structBuilder(data) : null;
+
+      case ParamType.Enum:
+        return deserializeEnum<T>(param);
 
       default:
         return null;
