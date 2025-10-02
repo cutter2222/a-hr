@@ -160,7 +160,7 @@ class _BottomRewardDetailsWidgetState extends State<BottomRewardDetailsWidget> {
                         updateCallback: () => safeSetState(() {}),
                         child: RewardGridItemWidget(
                           index: 0,
-                          isUnlocked: true,
+                          isUnlocked: widget!.viewRewardsRow?.isEarned,
                           viewRewards: widget!.viewRewardsRow!,
                         ),
                       ),
@@ -177,8 +177,8 @@ class _BottomRewardDetailsWidgetState extends State<BottomRewardDetailsWidget> {
                                 model: _model.choiceChipsModel1,
                                 updateCallback: () => safeSetState(() {}),
                                 child: ChoiceChipsWidget(
-                                  text: 'У вас нет этого предмета',
-                                  isPicked: false,
+                                  text: 'Вы владелец артефакта',
+                                  isPicked: true,
                                 ),
                               );
                             } else {
@@ -186,8 +186,8 @@ class _BottomRewardDetailsWidgetState extends State<BottomRewardDetailsWidget> {
                                 model: _model.choiceChipsModel2,
                                 updateCallback: () => safeSetState(() {}),
                                 child: ChoiceChipsWidget(
-                                  text: 'У вас есть этот предмет',
-                                  isPicked: true,
+                                  text: 'У вас нет этого артефакта',
+                                  isPicked: false,
                                 ),
                               );
                             }

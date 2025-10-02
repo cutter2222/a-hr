@@ -433,8 +433,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               0.0, 42.0, 0.0, 0.0),
                           child: FutureBuilder<List<TestUsersRow>>(
                             future: TestUsersTable().queryRows(
-                              queryFn: (q) =>
-                                  q.order('order_index', ascending: true),
+                              queryFn: (q) => q,
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
@@ -489,58 +488,24 @@ class _LoginWidgetState extends State<LoginWidget> {
 
                                   _shouldSetState = true;
                                   if (_model.bottomTestUsers != null) {
-                                    safeSetState(() {
-                                      _model.emailInputTextController?.text =
-                                          _model.bottomTestUsers!.login;
-                                    });
-                                    safeSetState(() {
-                                      _model.passwordInputTextController?.text =
-                                          _model.bottomTestUsers!.password;
-                                    });
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Аккаунт вписан в поля. Нажмите кнопку \"Войти\"',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                font: GoogleFonts.montserrat(
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontStyle,
-                                                ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                letterSpacing: 0.0,
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyLarge
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyLarge
-                                                        .fontStyle,
-                                              ),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        duration: Duration(milliseconds: 4000),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .bottomBackground,
-                                      ),
+                                    GoRouter.of(context).prepareAuthEvent();
+
+                                    final user =
+                                        await authManager.signInWithEmail(
+                                      context,
+                                      _model.bottomTestUsers!.login,
+                                      _model.bottomTestUsers!.password,
                                     );
+                                    if (user == null) {
+                                      return;
+                                    }
                                   } else {
                                     if (_shouldSetState) safeSetState(() {});
                                     return;
                                   }
+
+                                  context.goNamedAuth(
+                                      HomeWidget.routeName, context.mounted);
 
                                   if (_shouldSetState) safeSetState(() {});
                                 },

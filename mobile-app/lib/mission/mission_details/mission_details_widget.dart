@@ -3,8 +3,10 @@ import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/bordered_container_widget.dart';
 import '/components/bottom_mission_is_locked_widget.dart';
+import '/components/bottom_mission_pending_widget.dart';
 import '/components/button_blue_widget.dart';
 import '/components/home_reward_row_item_widget.dart';
+import '/components/skill_mission_item_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -62,6 +64,44 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
     });
 
     animationsMap.addAll({
+      'stackOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'columnOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
       'containerOnPageLoadAnimation1': AnimationInfo(
         loop: true,
         trigger: AnimationTrigger.onPageLoad,
@@ -85,6 +125,82 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
             duration: 1200.0.ms,
             color: Color(0x4CFFFFFF),
             angle: 0.524,
+          ),
+        ],
+      ),
+      'borderedContainerOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 500.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 500.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'borderedContainerOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 500.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 500.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'containerOnPageLoadAnimation3': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 750.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 750.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'containerOnPageLoadAnimation4': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 1000.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 1000.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -258,7 +374,8 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    ).animateOnPageLoad(animationsMap[
+                                        'stackOnPageLoadAnimation']!),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 24.0, 16.0, 0.0),
@@ -779,7 +896,8 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
                                             ),
                                           ),
                                         ],
-                                      ),
+                                      ).animateOnPageLoad(animationsMap[
+                                          'columnOnPageLoadAnimation']!),
                                     ),
                                     if (queryViewMissionsViewMissionsRow
                                                 ?.description !=
@@ -805,7 +923,8 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
                                                 .containerAccent,
                                             gradientAngle: 140.0,
                                           ),
-                                        ),
+                                        ).animateOnPageLoad(animationsMap[
+                                            'borderedContainerOnPageLoadAnimation1']!),
                                       ),
                                     if (queryViewMissionsViewMissionsRow
                                                 ?.task !=
@@ -831,8 +950,179 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
                                                 .gradient1n2,
                                             gradientAngle: 140.0,
                                           ),
+                                        ).animateOnPageLoad(animationsMap[
+                                            'borderedContainerOnPageLoadAnimation2']!),
+                                      ),
+                                    FutureBuilder<List<MissionSkillsRow>>(
+                                      future: MissionSkillsTable().queryRows(
+                                        queryFn: (q) => q.eqOrNull(
+                                          'mission_id',
+                                          widget!.missionId,
                                         ),
                                       ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 28.0,
+                                              height: 28.0,
+                                              child: SpinKitPulse(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                size: 28.0,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        List<MissionSkillsRow>
+                                            queryMissionSkillsMissionSkillsRowList =
+                                            snapshot.data!;
+
+                                        return Container(
+                                          decoration: BoxDecoration(),
+                                          child: Visibility(
+                                            visible:
+                                                queryMissionSkillsMissionSkillsRowList
+                                                    .isNotEmpty,
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 42.0, 0.0, 0.0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            -1.0, 0.0),
+                                                    child: Text(
+                                                      'Миссия прокачает ваши навыки',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                font: GoogleFonts
+                                                                    .montserrat(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 15.0,
+                                                                0.0, 0.0),
+                                                    child: FutureBuilder<
+                                                        List<ViewSkillsRow>>(
+                                                      future: ViewSkillsTable()
+                                                          .queryRows(
+                                                        queryFn: (q) =>
+                                                            q.inFilterOrNull(
+                                                          'id',
+                                                          queryMissionSkillsMissionSkillsRowList
+                                                              .map((e) =>
+                                                                  e.skillId)
+                                                              .withoutNulls
+                                                              .toList(),
+                                                        ),
+                                                      ),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        // Customize what your widget looks like when it's loading.
+                                                        if (!snapshot.hasData) {
+                                                          return Center(
+                                                            child: SizedBox(
+                                                              width: 28.0,
+                                                              height: 28.0,
+                                                              child:
+                                                                  SpinKitPulse(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                size: 28.0,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }
+                                                        List<ViewSkillsRow>
+                                                            columnViewSkillsRowList =
+                                                            snapshot.data!;
+
+                                                        return Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: List.generate(
+                                                              columnViewSkillsRowList
+                                                                  .length,
+                                                              (columnIndex) {
+                                                            final columnViewSkillsRow =
+                                                                columnViewSkillsRowList[
+                                                                    columnIndex];
+                                                            return SkillMissionItemWidget(
+                                                              key: Key(
+                                                                  'Keyu6k_${columnIndex}_of_${columnViewSkillsRowList.length}'),
+                                                              skillUpPoints:
+                                                                  valueOrDefault<
+                                                                      double>(
+                                                                queryMissionSkillsMissionSkillsRowList
+                                                                        .where((e) =>
+                                                                            e.skillId ==
+                                                                            columnViewSkillsRow
+                                                                                .id)
+                                                                        .toList()
+                                                                        .isNotEmpty
+                                                                    ? queryMissionSkillsMissionSkillsRowList
+                                                                        .where((e) =>
+                                                                            e.skillId ==
+                                                                            columnViewSkillsRow
+                                                                                .id)
+                                                                        .toList()
+                                                                        .elementAtOrNull(
+                                                                            0)
+                                                                        ?.skillUpPoints
+                                                                    : 0.0,
+                                                                0.0,
+                                                              ),
+                                                              viewSkillsRow:
+                                                                  columnViewSkillsRow,
+                                                            );
+                                                          }).divide(SizedBox(
+                                                              height: 8.0)),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ).animateOnPageLoad(animationsMap[
+                                            'containerOnPageLoadAnimation3']!);
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
@@ -864,136 +1154,141 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
 
                                   return Container(
                                     decoration: BoxDecoration(),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 42.0, 16.0, 0.0),
-                                            child: Text(
-                                              'Вы получите артефакты',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .labelMedium
-                                                  .override(
-                                                    font:
-                                                        GoogleFonts.montserrat(
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .fontStyle,
-                                                    ),
-                                                    letterSpacing: 0.0,
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .labelMedium
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .labelMedium
-                                                            .fontStyle,
-                                                  ),
+                                    child: Visibility(
+                                      visible:
+                                          missionRewardsMissionRewardsRowList
+                                              .isNotEmpty,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1.0, 0.0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 42.0, 16.0, 0.0),
+                                              child: Text(
+                                                'Вы получите артефакты',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .montserrat(
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .fontStyle,
+                                                        ),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 0.0, 0.0),
-                                            child: FutureBuilder<
-                                                List<ViewRewardsRow>>(
-                                              future:
-                                                  ViewRewardsTable().queryRows(
-                                                queryFn: (q) =>
-                                                    q.inFilterOrNull(
-                                                  'id',
-                                                  missionRewardsMissionRewardsRowList
-                                                      .map((e) => e.rewardId)
-                                                      .withoutNulls
-                                                      .toList(),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1.0, 0.0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 16.0, 0.0, 0.0),
+                                              child: FutureBuilder<
+                                                  List<ViewRewardsRow>>(
+                                                future: ViewRewardsTable()
+                                                    .queryRows(
+                                                  queryFn: (q) =>
+                                                      q.inFilterOrNull(
+                                                    'id',
+                                                    missionRewardsMissionRewardsRowList
+                                                        .map((e) => e.rewardId)
+                                                        .withoutNulls
+                                                        .toList(),
+                                                  ),
                                                 ),
-                                              ),
-                                              builder: (context, snapshot) {
-                                                // Customize what your widget looks like when it's loading.
-                                                if (!snapshot.hasData) {
-                                                  return Center(
-                                                    child: SizedBox(
-                                                      width: 28.0,
-                                                      height: 28.0,
-                                                      child: SpinKitPulse(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        size: 28.0,
+                                                builder: (context, snapshot) {
+                                                  // Customize what your widget looks like when it's loading.
+                                                  if (!snapshot.hasData) {
+                                                    return Center(
+                                                      child: SizedBox(
+                                                        width: 28.0,
+                                                        height: 28.0,
+                                                        child: SpinKitPulse(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          size: 28.0,
+                                                        ),
                                                       ),
+                                                    );
+                                                  }
+                                                  List<ViewRewardsRow>
+                                                      rowViewRewardsRowList =
+                                                      snapshot.data!;
+
+                                                  return SingleChildScrollView(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: List.generate(
+                                                              rowViewRewardsRowList
+                                                                  .length,
+                                                              (rowIndex) {
+                                                        final rowViewRewardsRow =
+                                                            rowViewRewardsRowList[
+                                                                rowIndex];
+                                                        return HomeRewardRowItemWidget(
+                                                          key: Key(
+                                                              'Keyvq7_${rowIndex}_of_${rowViewRewardsRowList.length}'),
+                                                          isUnlocked:
+                                                              rowViewRewardsRow
+                                                                  .isEarned,
+                                                          viewRewards:
+                                                              rowViewRewardsRow,
+                                                        );
+                                                      })
+                                                          .divide(SizedBox(
+                                                              width: 16.0))
+                                                          .addToStart(SizedBox(
+                                                              width: 16.0))
+                                                          .addToEnd(SizedBox(
+                                                              width: 16.0)),
                                                     ),
                                                   );
-                                                }
-                                                List<ViewRewardsRow>
-                                                    rowViewRewardsRowList =
-                                                    snapshot.data!;
-
-                                                return SingleChildScrollView(
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: List.generate(
-                                                            rowViewRewardsRowList
-                                                                .length,
-                                                            (rowIndex) {
-                                                      final rowViewRewardsRow =
-                                                          rowViewRewardsRowList[
-                                                              rowIndex];
-                                                      return HomeRewardRowItemWidget(
-                                                        key: Key(
-                                                            'Keyvq7_${rowIndex}_of_${rowViewRewardsRowList.length}'),
-                                                        isUnlocked:
-                                                            rowViewRewardsRow
-                                                                .isEarned,
-                                                        viewRewards:
-                                                            rowViewRewardsRow,
-                                                      );
-                                                    })
-                                                        .divide(SizedBox(
-                                                            width: 16.0))
-                                                        .addToStart(SizedBox(
-                                                            width: 16.0))
-                                                        .addToEnd(SizedBox(
-                                                            width: 16.0)),
-                                                  ),
-                                                );
-                                              },
+                                                },
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  );
+                                  ).animateOnPageLoad(animationsMap[
+                                      'containerOnPageLoadAnimation4']!);
                                 },
                               ),
                             ]
                                 .addToStart(SizedBox(height: 24.0))
-                                .addToEnd(SizedBox(height: 192.0)),
+                                .addToEnd(SizedBox(height: 256.0)),
                           ),
                         ),
                         Align(
@@ -1056,6 +1351,7 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
+                                                var _shouldSetState = false;
                                                 HapticFeedback.mediumImpact();
                                                 if (queryViewMissionsViewMissionsRow!
                                                         .autoCheckEnabled! &&
@@ -1072,12 +1368,13 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
                                                         ?.autoCheckFunctionName,
                                                     widget!.missionId,
                                                   );
-                                                  if (_model.callAutoCheckFunction !=
-                                                          null &&
-                                                      _model.callAutoCheckFunction !=
-                                                          '') {
+                                                  _shouldSetState = true;
+                                                  if (_model
+                                                          .callAutoCheckFunction ==
+                                                      'success') {
                                                     context.safePop();
                                                   } else {
+                                                    HapticFeedback.vibrate();
                                                     ScaffoldMessenger.of(
                                                             context)
                                                         .showSnackBar(
@@ -1102,7 +1399,7 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
                                                                 ),
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bottomBackground,
+                                                                    .primaryText,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight: FlutterFlowTheme.of(
@@ -1120,9 +1417,12 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
                                                         backgroundColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .secondary,
+                                                                .bottomBackground,
                                                       ),
                                                     );
+                                                    if (_shouldSetState)
+                                                      safeSetState(() {});
+                                                    return;
                                                   }
                                                 } else if (queryViewMissionsViewMissionsRow
                                                         ?.type ==
@@ -1199,7 +1499,8 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
                                                   );
                                                 }
 
-                                                safeSetState(() {});
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
                                               },
                                               child: wrapWithModel(
                                                 model: _model.buttonBlueModel1,
@@ -1244,6 +1545,53 @@ class _MissionDetailsWidgetState extends State<MissionDetailsWidget>
                                                 child: ButtonBlueWidget(
                                                   name: 'Результаты квиза',
                                                   isInactive: false,
+                                                ),
+                                              ),
+                                            ),
+                                          if (queryViewMissionsViewMissionsRow
+                                                  ?.userMissionsStatus ==
+                                              UserMissionStatus.pending.name)
+                                            InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(context)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            BottomMissionPendingWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              },
+                                              child: wrapWithModel(
+                                                model: _model.buttonBlueModel3,
+                                                updateCallback: () =>
+                                                    safeSetState(() {}),
+                                                child: ButtonBlueWidget(
+                                                  name: 'Миссия на проверке',
+                                                  isInactive: true,
                                                 ),
                                               ),
                                             ),

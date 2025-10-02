@@ -68,6 +68,12 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
       safeSetState(() {
         _model.lastNameInputTextController?.text = widget!.usersRow!.lastName!;
       });
+      safeSetState(() {
+        _model.aboutMeInputTextController?.text = widget!.usersRow!.aboutMe!;
+      });
+      safeSetState(() {
+        _model.nicknameInputTextController?.text = widget!.usersRow!.nickname!;
+      });
     });
 
     if (!isWeb) {
@@ -85,6 +91,12 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
     _model.lastNameInputTextController ??= TextEditingController();
     _model.lastNameInputFocusNode ??= FocusNode();
     _model.lastNameInputFocusNode!.addListener(() => safeSetState(() {}));
+    _model.nicknameInputTextController ??= TextEditingController();
+    _model.nicknameInputFocusNode ??= FocusNode();
+    _model.nicknameInputFocusNode!.addListener(() => safeSetState(() {}));
+    _model.aboutMeInputTextController ??= TextEditingController();
+    _model.aboutMeInputFocusNode ??= FocusNode();
+    _model.aboutMeInputFocusNode!.addListener(() => safeSetState(() {}));
     animationsMap.addAll({
       'textFieldOnPageLoadAnimation1': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
@@ -99,6 +111,30 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
         ],
       ),
       'textFieldOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'textFieldOnPageLoadAnimation3': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'textFieldOnPageLoadAnimation4': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
           FadeEffect(
@@ -535,6 +571,276 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                               },
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 16.0, 0.0, 0.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16.0),
+                              child: Container(
+                                width: double.infinity,
+                                height: 60.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  border: Border.all(
+                                    color: valueOrDefault<Color>(
+                                      (_model.nicknameInputFocusNode
+                                                  ?.hasFocus ??
+                                              false)
+                                          ? FlutterFlowTheme.of(context).primary
+                                          : FlutterFlowTheme.of(context)
+                                              .inputBorder,
+                                      FlutterFlowTheme.of(context).inputBorder,
+                                    ),
+                                    width: 1.0,
+                                  ),
+                                ),
+                                child: Align(
+                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: TextFormField(
+                                      controller:
+                                          _model.nicknameInputTextController,
+                                      focusNode: _model.nicknameInputFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.nicknameInputTextController',
+                                        Duration(milliseconds: 500),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      autofocus: false,
+                                      textCapitalization:
+                                          TextCapitalization.words,
+                                      textInputAction: TextInputAction.done,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        labelText: 'Никнейм',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .bodyLarge
+                                            .override(
+                                              font: GoogleFonts.montserrat(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .fontStyle,
+                                            ),
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        focusedErrorBorder: InputBorder.none,
+                                        contentPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                16.0, 12.0, 16.0, 12.0),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .override(
+                                            font: GoogleFonts.montserrat(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyLarge
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyLarge
+                                                    .fontStyle,
+                                          ),
+                                      maxLength: 30,
+                                      buildCounter: (context,
+                                              {required currentLength,
+                                              required isFocused,
+                                              maxLength}) =>
+                                          null,
+                                      cursorColor: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      enableInteractiveSelection: true,
+                                      validator: _model
+                                          .nicknameInputTextControllerValidator
+                                          .asValidator(context),
+                                      inputFormatters: [
+                                        if (!isAndroid && !isiOS)
+                                          TextInputFormatter.withFunction(
+                                              (oldValue, newValue) {
+                                            return TextEditingValue(
+                                              selection: newValue.selection,
+                                              text: newValue.text
+                                                  .toCapitalization(
+                                                      TextCapitalization.words),
+                                            );
+                                          }),
+                                      ],
+                                    ),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'textFieldOnPageLoadAnimation3']!),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 16.0, 0.0, 0.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16.0),
+                              child: Container(
+                                width: double.infinity,
+                                height: 142.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  border: Border.all(
+                                    color: valueOrDefault<Color>(
+                                      (_model.aboutMeInputFocusNode?.hasFocus ??
+                                              false)
+                                          ? FlutterFlowTheme.of(context).primary
+                                          : FlutterFlowTheme.of(context)
+                                              .inputBorder,
+                                      FlutterFlowTheme.of(context).inputBorder,
+                                    ),
+                                    width: 1.0,
+                                  ),
+                                ),
+                                child: Align(
+                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: TextFormField(
+                                      controller:
+                                          _model.aboutMeInputTextController,
+                                      focusNode: _model.aboutMeInputFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.aboutMeInputTextController',
+                                        Duration(milliseconds: 500),
+                                        () => safeSetState(() {}),
+                                      ),
+                                      autofocus: false,
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
+                                      textInputAction: TextInputAction.done,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        labelText: 'Обо мне',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .bodyLarge
+                                            .override(
+                                              font: GoogleFonts.montserrat(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .fontStyle,
+                                            ),
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        focusedErrorBorder: InputBorder.none,
+                                        contentPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                16.0, 12.0, 16.0, 12.0),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .override(
+                                            font: GoogleFonts.montserrat(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyLarge
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyLarge
+                                                    .fontStyle,
+                                          ),
+                                      maxLines: 5,
+                                      minLines: 5,
+                                      maxLength: 30,
+                                      buildCounter: (context,
+                                              {required currentLength,
+                                              required isFocused,
+                                              maxLength}) =>
+                                          null,
+                                      cursorColor: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      enableInteractiveSelection: true,
+                                      validator: _model
+                                          .aboutMeInputTextControllerValidator
+                                          .asValidator(context),
+                                      inputFormatters: [
+                                        if (!isAndroid && !isiOS)
+                                          TextInputFormatter.withFunction(
+                                              (oldValue, newValue) {
+                                            return TextEditingValue(
+                                              selection: newValue.selection,
+                                              text: newValue.text
+                                                  .toCapitalization(
+                                                      TextCapitalization
+                                                          .sentences),
+                                            );
+                                          }),
+                                      ],
+                                    ),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'textFieldOnPageLoadAnimation4']!),
+                                ),
+                              ),
+                            ),
+                          ),
                         ]
                             .addToStart(SizedBox(height: 24.0))
                             .addToEnd(SizedBox(height: 128.0)),
@@ -575,6 +881,8 @@ class _ProfileEditWidgetState extends State<ProfileEditWidget>
                                 _model.firstNameInputTextController.text,
                             'photo_url': _model.photoUrl,
                             'gender': _model.gender,
+                            'nickname': _model.nicknameInputTextController.text,
+                            'about_me': _model.aboutMeInputTextController.text,
                           },
                           matchingRows: (rows) => rows.eqOrNull(
                             'id',

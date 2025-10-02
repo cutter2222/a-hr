@@ -150,7 +150,8 @@ class _LogbookListItemWidgetState extends State<LogbookListItemWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          if (widget!.viewLogbook?.xpPointsChange != null)
+                          if ((widget!.viewLogbook?.xpPointsChange != null) &&
+                              (widget!.viewLogbook?.xpPointsChange != 0))
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -204,7 +205,8 @@ class _LogbookListItemWidgetState extends State<LogbookListItemWidget> {
                                 ),
                               ],
                             ),
-                          if (widget!.viewLogbook?.coinsChange != null)
+                          if ((widget!.viewLogbook?.coinsChange != null) &&
+                              (widget!.viewLogbook?.coinsChange != 0))
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -258,7 +260,9 @@ class _LogbookListItemWidgetState extends State<LogbookListItemWidget> {
                                 ),
                               ],
                             ),
-                          if (widget!.viewLogbook?.skillPointsChange != null)
+                          if ((widget!.viewLogbook?.skillPointsChange !=
+                                  null) &&
+                              (widget!.viewLogbook?.skillPointsChange != 0))
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [

@@ -43,6 +43,8 @@ class MissionQuizModel extends FlutterFlowModel<MissionQuizWidget> {
   late ButtonBlueModel buttonNextModel;
   // Model for ButtonComplete.
   late ButtonBlueModel buttonCompleteModel;
+  // Stores action output result for [Backend Call - Insert Row] action in ButtonComplete widget.
+  UserMissionsRow? insertUserMissions;
 
   @override
   void initState(BuildContext context) {

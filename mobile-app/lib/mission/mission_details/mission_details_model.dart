@@ -3,8 +3,10 @@ import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/bordered_container_widget.dart';
 import '/components/bottom_mission_is_locked_widget.dart';
+import '/components/bottom_mission_pending_widget.dart';
 import '/components/button_blue_widget.dart';
 import '/components/home_reward_row_item_widget.dart';
+import '/components/skill_mission_item_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -38,6 +40,8 @@ class MissionDetailsModel extends FlutterFlowModel<MissionDetailsWidget> {
   String? callAutoCheckFunction;
   // Model for ButtonBlue component.
   late ButtonBlueModel buttonBlueModel2;
+  // Model for ButtonBlue component.
+  late ButtonBlueModel buttonBlueModel3;
 
   @override
   void initState(BuildContext context) {
@@ -47,6 +51,7 @@ class MissionDetailsModel extends FlutterFlowModel<MissionDetailsWidget> {
         createModel(context, () => BorderedContainerModel());
     buttonBlueModel1 = createModel(context, () => ButtonBlueModel());
     buttonBlueModel2 = createModel(context, () => ButtonBlueModel());
+    buttonBlueModel3 = createModel(context, () => ButtonBlueModel());
   }
 
   @override
@@ -55,6 +60,7 @@ class MissionDetailsModel extends FlutterFlowModel<MissionDetailsWidget> {
     borderedContainerModel2.dispose();
     buttonBlueModel1.dispose();
     buttonBlueModel2.dispose();
+    buttonBlueModel3.dispose();
   }
 
   /// Action blocks.

@@ -251,6 +251,10 @@ dynamic deserializeParam<T>(
             return MissionRequiredMissionsRow(data);
           case ViewMissionsRow:
             return ViewMissionsRow(data);
+          case ViewMissionSkillsRow:
+            return ViewMissionSkillsRow(data);
+          case ViewMissionRequiredSkillsRow:
+            return ViewMissionRequiredSkillsRow(data);
           case UserPurchasesRow:
             return UserPurchasesRow(data);
           case MissionRewardsRow:

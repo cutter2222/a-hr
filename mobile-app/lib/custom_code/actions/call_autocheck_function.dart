@@ -13,50 +13,44 @@ import 'package:flutter/material.dart';
 Future<String> callAutocheckFunction(
     String? functionName, int? missionId) async {
   try {
-    // Проверка на null для functionName
     if (functionName == null) {
       print('Function name is null');
       return 'Название функции не указано';
     }
+    print('Calling function: $functionName'); // Add this for debugging
 
-    // Проверка на null для missionId
     if (missionId == null) {
       print('Mission ID is null');
       return 'ID миссии не указан';
     }
 
-    // Инициализация Supabase клиента
     final supabase = SupaFlow.client;
     if (supabase == null) {
       print('Supabase client not initialized');
       return 'Supabase клиент не инициализирован';
     }
 
-    // Получаем ID текущего пользователя
     final userId = supabase.auth.currentUser?.id;
     if (userId == null) {
       print('User not authenticated');
       return 'Пользователь не авторизован';
     }
 
-    // Вызов RPC функции
+    // Explicitly call the function with correct parameter names
     final response = await supabase.rpc(functionName, params: {
-      'user_id': userId,
-      'mission_id': missionId,
+      'p_user_id': userId, // Match function parameter name
+      'p_mission_id': missionId, // Match function parameter name
     });
 
-    // Логируем результат
     print(
         'Autocheck function $functionName called by user $userId for mission $missionId: $response');
 
-    // Проверяем ответ
     if (response['status'] == 'success') {
       return 'success';
     } else {
       return response['message'] ?? 'Неизвестная ошибка';
     }
   } catch (e) {
-    // Обработка ошибок
     print(
         'Error calling autocheck function $functionName for mission $missionId: $e');
     return 'Ошибка выполнения: $e';

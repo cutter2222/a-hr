@@ -18,6 +18,8 @@ export 'tables/user_events.dart';
 export 'tables/view_logbook.dart';
 export 'tables/mission_required_missions.dart';
 export 'tables/view_missions.dart';
+export 'tables/view_mission_skills.dart';
+export 'tables/view_mission_required_skills.dart';
 export 'tables/user_purchases.dart';
 export 'tables/mission_rewards.dart';
 export 'tables/rank_required_skills.dart';

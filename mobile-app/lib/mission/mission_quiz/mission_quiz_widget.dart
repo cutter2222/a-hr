@@ -412,16 +412,29 @@ class _MissionQuizWidgetState extends State<MissionQuizWidget> {
                                       ),
                                   );
                                   safeSetState(() {});
-                                  await UserMissionsTable().insert({
+                                  _model.insertUserMissions =
+                                      await UserMissionsTable().insert({
                                     'status': UserMissionStatus.pending.name,
                                     'playload': _model.quiz?.toMap(),
                                     'mission_id': widget!.viewMissionsRow?.id,
                                     'user_id': currentUserUid,
                                   });
+                                  await UserMissionsTable().update(
+                                    data: {
+                                      'status':
+                                          UserMissionStatus.completed.name,
+                                    },
+                                    matchingRows: (rows) => rows.eqOrNull(
+                                      'id',
+                                      _model.insertUserMissions?.id,
+                                    ),
+                                  );
                                   context.safePop();
                                 } else {
                                   HapticFeedback.heavyImpact();
                                 }
+
+                                safeSetState(() {});
                               },
                               child: wrapWithModel(
                                 model: _model.buttonCompleteModel,

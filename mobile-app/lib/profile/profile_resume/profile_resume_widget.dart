@@ -58,7 +58,7 @@ class _ProfileResumeWidgetState extends State<ProfileResumeWidget>
       });
       safeSetState(() {
         _model.educationInputTextController?.text =
-            _model.educationInputTextController.text;
+            widget!.usersRow!.education!;
       });
       safeSetState(() {
         _model.trainingInputTextController?.text = widget!.usersRow!.training!;
@@ -419,7 +419,7 @@ class _ProfileResumeWidgetState extends State<ProfileResumeWidget>
                                       ),
                                       autofocus: false,
                                       textCapitalization:
-                                          TextCapitalization.words,
+                                          TextCapitalization.sentences,
                                       textInputAction: TextInputAction.done,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -502,7 +502,8 @@ class _ProfileResumeWidgetState extends State<ProfileResumeWidget>
                                               selection: newValue.selection,
                                               text: newValue.text
                                                   .toCapitalization(
-                                                      TextCapitalization.words),
+                                                      TextCapitalization
+                                                          .sentences),
                                             );
                                           }),
                                       ],
@@ -553,7 +554,7 @@ class _ProfileResumeWidgetState extends State<ProfileResumeWidget>
                                       ),
                                       autofocus: false,
                                       textCapitalization:
-                                          TextCapitalization.words,
+                                          TextCapitalization.sentences,
                                       textInputAction: TextInputAction.done,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -636,7 +637,8 @@ class _ProfileResumeWidgetState extends State<ProfileResumeWidget>
                                               selection: newValue.selection,
                                               text: newValue.text
                                                   .toCapitalization(
-                                                      TextCapitalization.words),
+                                                      TextCapitalization
+                                                          .sentences),
                                             );
                                           }),
                                       ],
@@ -784,7 +786,7 @@ class _ProfileResumeWidgetState extends State<ProfileResumeWidget>
                               borderRadius: BorderRadius.circular(16.0),
                               child: Container(
                                 width: double.infinity,
-                                height: 60.0,
+                                height: 120.0,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBackground,
@@ -880,7 +882,7 @@ class _ProfileResumeWidgetState extends State<ProfileResumeWidget>
                                                     .fontStyle,
                                           ),
                                       maxLines: null,
-                                      minLines: 3,
+                                      minLines: 4,
                                       cursorColor: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       enableInteractiveSelection: true,
@@ -914,7 +916,7 @@ class _ProfileResumeWidgetState extends State<ProfileResumeWidget>
                               borderRadius: BorderRadius.circular(16.0),
                               child: Container(
                                 width: double.infinity,
-                                height: 60.0,
+                                height: 120.0,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBackground,
@@ -1012,7 +1014,7 @@ class _ProfileResumeWidgetState extends State<ProfileResumeWidget>
                                                     .fontStyle,
                                           ),
                                       maxLines: null,
-                                      minLines: 3,
+                                      minLines: 4,
                                       cursorColor: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       enableInteractiveSelection: true,
@@ -1062,38 +1064,93 @@ class _ProfileResumeWidgetState extends State<ProfileResumeWidget>
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
-                      await UsersTable().update(
-                        data: {
-                          'city': _model.cityInputTextController.text,
-                          'education': _model.educationInputTextController.text,
-                          'training': _model.trainingInputTextController.text,
-                          'gender': _model.gender,
-                          'hobby': _model.hobbyInputTextController.text,
-                          'qualities': _model.qualitiesInputTextController.text,
-                          'worked': _model.workedInputTextController.text,
-                        },
-                        matchingRows: (rows) => rows.eqOrNull(
-                          'id',
-                          currentUserUid,
-                        ),
-                      );
-                      context.safePop();
+                      if ((_model.cityInputTextController.text != null &&
+                              _model.cityInputTextController.text != '') &&
+                          (_model.educationInputTextController.text != null &&
+                              _model.educationInputTextController.text != '') &&
+                          (_model.trainingInputTextController.text != null &&
+                              _model.trainingInputTextController.text != '') &&
+                          (_model.workedInputTextController.text != null &&
+                              _model.workedInputTextController.text != '') &&
+                          (_model.hobbyInputTextController.text != null &&
+                              _model.hobbyInputTextController.text != '') &&
+                          (_model.qualitiesInputTextController.text != null &&
+                              _model.qualitiesInputTextController.text != '')) {
+                        HapticFeedback.mediumImpact();
+                        await UsersTable().update(
+                          data: {
+                            'city': _model.cityInputTextController.text,
+                            'education':
+                                _model.educationInputTextController.text,
+                            'training': _model.trainingInputTextController.text,
+                            'hobby': _model.hobbyInputTextController.text,
+                            'qualities':
+                                _model.qualitiesInputTextController.text,
+                            'worked': _model.workedInputTextController.text,
+                          },
+                          matchingRows: (rows) => rows.eqOrNull(
+                            'id',
+                            currentUserUid,
+                          ),
+                        );
+                        context.safePop();
+                      } else {
+                        HapticFeedback.vibrate();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Заполните все поля',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyLarge
+                                  .override(
+                                    font: GoogleFonts.montserrat(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .fontStyle,
+                                  ),
+                              textAlign: TextAlign.start,
+                            ),
+                            duration: Duration(milliseconds: 4000),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).bottomBackground,
+                          ),
+                        );
+                      }
                     },
                     child: wrapWithModel(
                       model: _model.buttonBlueModel,
                       updateCallback: () => safeSetState(() {}),
                       child: ButtonBlueWidget(
                         name: 'Сохранить',
-                        isInactive: !((_model
-                                        .educationInputTextController.text !=
+                        isInactive: !((_model.cityInputTextController.text !=
                                     null &&
+                                _model.cityInputTextController.text != '') &&
+                            (_model.educationInputTextController.text != null &&
                                 _model.educationInputTextController.text !=
                                     '') &&
                             (_model.trainingInputTextController.text != null &&
                                 _model.trainingInputTextController.text !=
                                     '') &&
-                            (_model.birthDate != null) &&
-                            (_model.gender != null && _model.gender != '')),
+                            (_model.workedInputTextController.text != null &&
+                                _model.workedInputTextController.text != '') &&
+                            (_model.hobbyInputTextController.text != null &&
+                                _model.hobbyInputTextController.text != '') &&
+                            (_model.qualitiesInputTextController.text != null &&
+                                _model.qualitiesInputTextController.text !=
+                                    '')),
                       ),
                     ),
                   ),

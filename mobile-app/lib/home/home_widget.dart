@@ -12,6 +12,7 @@ import '/components/level_progress_widget.dart';
 import '/components/message_widget.dart';
 import '/components/missions_list_item_widget.dart';
 import '/components/navbar_widget.dart';
+import '/components/page_info_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -156,6 +157,25 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           ),
         ],
       ),
+      'containerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 1000.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 1000.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
     });
   }
 
@@ -173,6 +193,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -251,28 +273,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Expanded(
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  context.pushNamed(
-                                                      OnboardingWidget
-                                                          .routeName);
-                                                },
-                                                child: wrapWithModel(
-                                                  model: _model.coinsItemModel,
-                                                  updateCallback: () =>
-                                                      safeSetState(() {}),
-                                                  updateOnChange: true,
-                                                  child: CoinsItemWidget(
-                                                    coins: valueOrDefault<int>(
-                                                      viewUsersViewUsersRow
-                                                          ?.coins,
-                                                      0,
-                                                    ),
+                                              child: wrapWithModel(
+                                                model: _model.coinsItemModel,
+                                                updateCallback: () =>
+                                                    safeSetState(() {}),
+                                                updateOnChange: true,
+                                                child: CoinsItemWidget(
+                                                  coins: valueOrDefault<int>(
+                                                    viewUsersViewUsersRow
+                                                        ?.coins,
+                                                    0,
                                                   ),
                                                 ),
                                               ),
@@ -345,31 +355,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                       .of(context)
                                                                   .primaryText,
                                                               size: 28.0,
-                                                            ),
-                                                          ),
-                                                          Align(
-                                                            alignment:
-                                                                AlignmentDirectional(
-                                                                    1.0, -1.0),
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          8.0,
-                                                                          8.0,
-                                                                          0.0),
-                                                              child: Container(
-                                                                width: 8.0,
-                                                                height: 8.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Color(
-                                                                      0xFFEEBC60),
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                ),
-                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -1010,7 +995,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             ],
                                           ),
                                         ),
-                                      );
+                                      ).animateOnPageLoad(animationsMap[
+                                          'containerOnPageLoadAnimation']!);
                                     },
                                   ),
                                 ]
@@ -1164,6 +1150,21 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                 ),
               ),
             ),
+            if (!FFAppState().homeInfo)
+              wrapWithModel(
+                model: _model.pageInfoModel,
+                updateCallback: () => safeSetState(() {}),
+                child: PageInfoWidget(
+                  title: 'Добро пожаловать на борт «Алабуга»! 🚀',
+                  text:
+                      'Здесь всё устроено как космическое приключение: ты выполняешь миссии, повышаешь свой ранг, прокачиваешь навыки и получаешь уникальные артефакты. Все твои успехи сохраняются в бортовом журнале, а заработаннуе монеты можно потратить в КосмоЛавке.',
+                  isRightSide: false,
+                  onTap: () async {
+                    FFAppState().homeInfo = true;
+                    safeSetState(() {});
+                  },
+                ),
+              ),
           ],
         ),
       ),

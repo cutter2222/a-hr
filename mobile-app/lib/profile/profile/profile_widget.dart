@@ -5,12 +5,16 @@ import '/components/bottom_upload_file_widget.dart';
 import '/components/icon_list_item_widget.dart';
 import '/components/navbar_widget.dart';
 import '/components/profile_avatar_widget.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:math';
 import 'dart:ui';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -28,15 +32,59 @@ class ProfileWidget extends StatefulWidget {
   State<ProfileWidget> createState() => _ProfileWidgetState();
 }
 
-class _ProfileWidgetState extends State<ProfileWidget> {
+class _ProfileWidgetState extends State<ProfileWidget>
+    with TickerProviderStateMixin {
   late ProfileModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => ProfileModel());
+
+    animationsMap.addAll({
+      'profileAvatarOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'columnOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -115,186 +163,202 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 firstName: queryUsersUsersRow?.firstName,
                                 lastName: queryUsersUsersRow?.lastName,
                               ),
-                            ),
+                            ).animateOnPageLoad(animationsMap[
+                                'profileAvatarOnPageLoadAnimation']!),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 48.0, 0.0, 0.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed(
-                                  ProfileEditWidget.routeName,
-                                  queryParameters: {
-                                    'usersRow': serializeParam(
-                                      queryUsersUsersRow,
-                                      ParamType.SupabaseRow,
-                                    ),
-                                  }.withoutNulls,
-                                );
-                              },
-                              child: wrapWithModel(
-                                model: _model.iconListItemModel1,
-                                updateCallback: () => safeSetState(() {}),
-                                child: IconListItemWidget(
-                                  icon: Icon(
-                                    FFIcons.kfileEdit,
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    size: 24.0,
-                                  ),
-                                  text: 'Мои данные',
-                                ),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.pushNamed(
-                                ProfileResumeWidget.routeName,
-                                queryParameters: {
-                                  'usersRow': serializeParam(
-                                    queryUsersUsersRow,
-                                    ParamType.SupabaseRow,
-                                  ),
-                                }.withoutNulls,
-                              );
-                            },
-                            child: wrapWithModel(
-                              model: _model.iconListItemModel2,
-                              updateCallback: () => safeSetState(() {}),
-                              child: IconListItemWidget(
-                                icon: Icon(
-                                  FFIcons.klistChecklist,
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 24.0,
-                                ),
-                                text: 'Мое резюме',
-                              ),
-                            ),
-                          ),
-                          if (false)
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  context: context,
-                                  builder: (context) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        FocusScope.of(context).unfocus();
-                                        FocusManager.instance.primaryFocus
-                                            ?.unfocus();
-                                      },
-                                      child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
-                                        child: BottomUploadFileWidget(),
-                                      ),
+                                0.0, 42.0, 0.0, 0.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed(
+                                      ProfileEditWidget.routeName,
+                                      queryParameters: {
+                                        'usersRow': serializeParam(
+                                          queryUsersUsersRow,
+                                          ParamType.SupabaseRow,
+                                        ),
+                                      }.withoutNulls,
                                     );
                                   },
-                                ).then((value) => safeSetState(() {}));
-                              },
-                              child: wrapWithModel(
-                                model: _model.iconListItemModel3,
-                                updateCallback: () => safeSetState(() {}),
-                                child: IconListItemWidget(
-                                  icon: Icon(
-                                    Icons.file_copy,
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    size: 24.0,
-                                  ),
-                                  text: 'Загрузка Media',
-                                ),
-                              ),
-                            ),
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.pushNamed(ProfileAboutWidget.routeName);
-                            },
-                            child: wrapWithModel(
-                              model: _model.iconListItemModel4,
-                              updateCallback: () => safeSetState(() {}),
-                              child: IconListItemWidget(
-                                icon: Icon(
-                                  FFIcons.kinfoCircle,
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 24.0,
-                                ),
-                                text: 'О приложении',
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              var _shouldSetState = false;
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                enableDrag: false,
-                                context: context,
-                                builder: (context) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      FocusScope.of(context).unfocus();
-                                      FocusManager.instance.primaryFocus
-                                          ?.unfocus();
-                                    },
-                                    child: Padding(
-                                      padding: MediaQuery.viewInsetsOf(context),
-                                      child: BottomLogoutWidget(),
+                                  child: wrapWithModel(
+                                    model: _model.iconListItemModel1,
+                                    updateCallback: () => safeSetState(() {}),
+                                    child: IconListItemWidget(
+                                      icon: Icon(
+                                        FFIcons.kfileEdit,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 24.0,
+                                      ),
+                                      text: 'Мои данные',
                                     ),
-                                  );
-                                },
-                              ).then((value) => safeSetState(
-                                  () => _model.bottomLogout = value));
-
-                              _shouldSetState = true;
-                              if (_model.bottomLogout!) {
-                                context.goNamedAuth(OnboardingWidget.routeName,
-                                    context.mounted);
-
-                                GoRouter.of(context).prepareAuthEvent();
-                                await authManager.signOut();
-                                GoRouter.of(context).clearRedirectLocation();
-                              } else {
-                                if (_shouldSetState) safeSetState(() {});
-                                return;
-                              }
-
-                              if (_shouldSetState) safeSetState(() {});
-                            },
-                            child: wrapWithModel(
-                              model: _model.iconListItemModel5,
-                              updateCallback: () => safeSetState(() {}),
-                              child: IconListItemWidget(
-                                icon: Icon(
-                                  FFIcons.klogOut,
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 24.0,
+                                  ),
                                 ),
-                                text: 'Выйти',
-                              ),
-                            ),
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed(
+                                      ProfileResumeWidget.routeName,
+                                      queryParameters: {
+                                        'usersRow': serializeParam(
+                                          queryUsersUsersRow,
+                                          ParamType.SupabaseRow,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  },
+                                  child: wrapWithModel(
+                                    model: _model.iconListItemModel2,
+                                    updateCallback: () => safeSetState(() {}),
+                                    child: IconListItemWidget(
+                                      icon: Icon(
+                                        FFIcons.klistChecklist,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 24.0,
+                                      ),
+                                      text: 'Мое резюме',
+                                    ),
+                                  ),
+                                ),
+                                if (false)
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        context: context,
+                                        builder: (context) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(context).unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: Padding(
+                                              padding: MediaQuery.viewInsetsOf(
+                                                  context),
+                                              child: BottomUploadFileWidget(),
+                                            ),
+                                          );
+                                        },
+                                      ).then((value) => safeSetState(() {}));
+                                    },
+                                    child: wrapWithModel(
+                                      model: _model.iconListItemModel3,
+                                      updateCallback: () => safeSetState(() {}),
+                                      child: IconListItemWidget(
+                                        icon: Icon(
+                                          Icons.file_copy,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 24.0,
+                                        ),
+                                        text: 'Загрузка Media',
+                                      ),
+                                    ),
+                                  ),
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed(
+                                        ProfileAboutWidget.routeName);
+                                  },
+                                  child: wrapWithModel(
+                                    model: _model.iconListItemModel4,
+                                    updateCallback: () => safeSetState(() {}),
+                                    child: IconListItemWidget(
+                                      icon: Icon(
+                                        FFIcons.kinfoCircle,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 24.0,
+                                      ),
+                                      text: 'О приложении',
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    var _shouldSetState = false;
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      enableDrag: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(context).unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: BottomLogoutWidget(),
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(
+                                        () => _model.bottomLogout = value));
+
+                                    _shouldSetState = true;
+                                    if (_model.bottomLogout!) {
+                                      context.goNamedAuth(
+                                          OnboardingWidget.routeName,
+                                          context.mounted);
+
+                                      GoRouter.of(context).prepareAuthEvent();
+                                      await authManager.signOut();
+                                      GoRouter.of(context)
+                                          .clearRedirectLocation();
+                                    } else {
+                                      if (_shouldSetState) safeSetState(() {});
+                                      return;
+                                    }
+
+                                    if (_shouldSetState) safeSetState(() {});
+                                  },
+                                  child: wrapWithModel(
+                                    model: _model.iconListItemModel5,
+                                    updateCallback: () => safeSetState(() {}),
+                                    child: IconListItemWidget(
+                                      icon: Icon(
+                                        FFIcons.klogOut,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 24.0,
+                                      ),
+                                      text: 'Выйти',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ).animateOnPageLoad(
+                                animationsMap['columnOnPageLoadAnimation']!),
                           ),
                         ]
                             .addToStart(SizedBox(height: 134.0))

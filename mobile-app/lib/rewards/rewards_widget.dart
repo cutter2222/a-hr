@@ -324,7 +324,8 @@ class _RewardsWidgetState extends State<RewardsWidget>
                                 queryFn: (q) => q.inFilterOrNull(
                                   'id',
                                   containerUserRewardsRowList
-                                      .map((e) => e.id)
+                                      .map((e) => e.rewardId)
+                                      .withoutNulls
                                       .toList(),
                                 ),
                               ),
@@ -361,9 +362,9 @@ class _RewardsWidgetState extends State<RewardsWidget>
                                     mainAxisSpacing: 16.0,
                                     childAspectRatio: valueOrDefault<double>(
                                       MediaQuery.sizeOf(context).width *
-                                          0.95 /
+                                          0.91 /
                                           393,
-                                      0.95,
+                                      0.91,
                                     ),
                                   ),
                                   scrollDirection: Axis.vertical,
@@ -438,9 +439,9 @@ class _RewardsWidgetState extends State<RewardsWidget>
                                     mainAxisSpacing: 16.0,
                                     childAspectRatio: valueOrDefault<double>(
                                       MediaQuery.sizeOf(context).width *
-                                          0.95 /
+                                          0.91 /
                                           393,
-                                      0.95,
+                                      0.91,
                                     ),
                                   ),
                                   scrollDirection: Axis.vertical,
@@ -515,9 +516,9 @@ class _RewardsWidgetState extends State<RewardsWidget>
                                     mainAxisSpacing: 16.0,
                                     childAspectRatio: valueOrDefault<double>(
                                       MediaQuery.sizeOf(context).width *
-                                          0.95 /
+                                          0.91 /
                                           393,
-                                      0.95,
+                                      0.91,
                                     ),
                                   ),
                                   scrollDirection: Axis.vertical,

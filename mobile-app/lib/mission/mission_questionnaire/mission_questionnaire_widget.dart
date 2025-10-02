@@ -426,6 +426,7 @@ class _MissionQuestionnaireWidgetState
                                         _model.missionQuestionnaire?.toMap(),
                                     'status': UserMissionStatus.pending.name,
                                   });
+                                  context.safePop();
                                 } else {
                                   HapticFeedback.heavyImpact();
                                 }

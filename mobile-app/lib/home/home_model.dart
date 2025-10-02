@@ -12,6 +12,7 @@ import '/components/level_progress_widget.dart';
 import '/components/message_widget.dart';
 import '/components/missions_list_item_widget.dart';
 import '/components/navbar_widget.dart';
+import '/components/page_info_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -50,6 +51,8 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
   bool? logout;
   // Model for Navbar component.
   late NavbarModel navbarModel;
+  // Model for PageInfo component.
+  late PageInfoModel pageInfoModel;
 
   @override
   void initState(BuildContext context) {
@@ -61,6 +64,7 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
     messageModel = createModel(context, () => MessageModel());
     buttonAnimatedModel = createModel(context, () => ButtonAnimatedModel());
     navbarModel = createModel(context, () => NavbarModel());
+    pageInfoModel = createModel(context, () => PageInfoModel());
   }
 
   @override
@@ -73,5 +77,6 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
     messageModel.dispose();
     buttonAnimatedModel.dispose();
     navbarModel.dispose();
+    pageInfoModel.dispose();
   }
 }

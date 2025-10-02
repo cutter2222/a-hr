@@ -1,14 +1,20 @@
 import '/backend/supabase/supabase.dart';
+import '/components/bordered_container_widget.dart';
+import '/components/choice_chips_widget.dart';
 import '/components/home_reward_row_item_widget.dart';
 import '/components/level_progress_widget.dart';
 import '/components/profile_avatar_widget.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:math';
 import 'dart:ui';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -31,15 +37,116 @@ class ProfileDetailsWidget extends StatefulWidget {
   State<ProfileDetailsWidget> createState() => _ProfileDetailsWidgetState();
 }
 
-class _ProfileDetailsWidgetState extends State<ProfileDetailsWidget> {
+class _ProfileDetailsWidgetState extends State<ProfileDetailsWidget>
+    with TickerProviderStateMixin {
   late ProfileDetailsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => ProfileDetailsModel());
+
+    animationsMap.addAll({
+      'profileAvatarOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'choiceChipsOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'levelProgressOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 500.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 500.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'borderedContainerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 750.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 750.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'containerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 1000.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 1000.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -166,8 +273,27 @@ class _ProfileDetailsWidgetState extends State<ProfileDetailsWidget> {
                                           viewUsersViewUsersRow?.firstName,
                                       lastName: viewUsersViewUsersRow?.lastName,
                                     ),
-                                  ),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'profileAvatarOnPageLoadAnimation']!),
                                 ),
+                                if (viewUsersViewUsersRow?.nickname != null &&
+                                    viewUsersViewUsersRow?.nickname != '')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 24.0, 0.0, 0.0),
+                                    child: wrapWithModel(
+                                      model: _model.choiceChipsModel,
+                                      updateCallback: () => safeSetState(() {}),
+                                      child: ChoiceChipsWidget(
+                                        text: valueOrDefault<String>(
+                                          viewUsersViewUsersRow?.nickname,
+                                          'null',
+                                        ),
+                                        isPicked: true,
+                                      ),
+                                    ).animateOnPageLoad(animationsMap[
+                                        'choiceChipsOnPageLoadAnimation']!),
+                                  ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 24.0, 0.0, 0.0),
@@ -178,8 +304,29 @@ class _ProfileDetailsWidgetState extends State<ProfileDetailsWidget> {
                                     child: LevelProgressWidget(
                                       viewUsers: viewUsersViewUsersRow!,
                                     ),
-                                  ),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'levelProgressOnPageLoadAnimation']!),
                                 ),
+                                if (viewUsersViewUsersRow?.aboutMe != null &&
+                                    viewUsersViewUsersRow?.aboutMe != '')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 24.0, 0.0, 0.0),
+                                    child: wrapWithModel(
+                                      model: _model.borderedContainerModel,
+                                      updateCallback: () => safeSetState(() {}),
+                                      child: BorderedContainerWidget(
+                                        title: 'Обо мне',
+                                        text: viewUsersViewUsersRow?.aboutMe,
+                                        color1: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        color2: FlutterFlowTheme.of(context)
+                                            .containerAccent,
+                                        gradientAngle: 140.0,
+                                      ),
+                                    ).animateOnPageLoad(animationsMap[
+                                        'borderedContainerOnPageLoadAnimation']!),
+                                  ),
                               ],
                             ),
                           ),
@@ -392,7 +539,8 @@ class _ProfileDetailsWidgetState extends State<ProfileDetailsWidget> {
                                     ],
                                   ),
                                 ),
-                              );
+                              ).animateOnPageLoad(animationsMap[
+                                  'containerOnPageLoadAnimation']!);
                             },
                           ),
                         ]

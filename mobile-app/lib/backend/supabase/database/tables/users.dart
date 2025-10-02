@@ -90,4 +90,7 @@ class UsersRow extends SupabaseDataRow {
 
   String? get worked => getField<String>('worked');
   set worked(String? value) => setField<String>('worked', value);
+
+  String? get aboutMe => getField<String>('about_me');
+  set aboutMe(String? value) => setField<String>('about_me', value);
 }

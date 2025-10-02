@@ -176,6 +176,8 @@ class _RegistrationEmployee1WidgetState
                                         () => safeSetState(() {}),
                                       ),
                                       autofocus: false,
+                                      textCapitalization:
+                                          TextCapitalization.words,
                                       textInputAction: TextInputAction.done,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -244,6 +246,18 @@ class _RegistrationEmployee1WidgetState
                                       validator: _model
                                           .companyNameInputTextControllerValidator
                                           .asValidator(context),
+                                      inputFormatters: [
+                                        if (!isAndroid && !isiOS)
+                                          TextInputFormatter.withFunction(
+                                              (oldValue, newValue) {
+                                            return TextEditingValue(
+                                              selection: newValue.selection,
+                                              text: newValue.text
+                                                  .toCapitalization(
+                                                      TextCapitalization.words),
+                                            );
+                                          }),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -290,6 +304,8 @@ class _RegistrationEmployee1WidgetState
                                         () => safeSetState(() {}),
                                       ),
                                       autofocus: false,
+                                      textCapitalization:
+                                          TextCapitalization.words,
                                       textInputAction: TextInputAction.done,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -358,6 +374,18 @@ class _RegistrationEmployee1WidgetState
                                       validator: _model
                                           .companyPositionInputTextControllerValidator
                                           .asValidator(context),
+                                      inputFormatters: [
+                                        if (!isAndroid && !isiOS)
+                                          TextInputFormatter.withFunction(
+                                              (oldValue, newValue) {
+                                            return TextEditingValue(
+                                              selection: newValue.selection,
+                                              text: newValue.text
+                                                  .toCapitalization(
+                                                      TextCapitalization.words),
+                                            );
+                                          }),
+                                      ],
                                     ),
                                   ),
                                 ),

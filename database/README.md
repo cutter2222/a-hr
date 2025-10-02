@@ -2,6 +2,9 @@
 
 Эта документация описывает структуру таблиц и их взаимосвязи в базе данных PostgreSQL, используемой в проекте. Таблицы организованы для управления пользователями, миссиями, наградами, событиями, уровнями, рангами, навыками, покупками и другими сущностями. Для удобства восприятия информация представлена в виде таблиц и диаграмм связей.
 
+schema.sql - полная структура
+
+
 ## Основные сущности
 
 | Сущность | Описание |
@@ -403,3 +406,92 @@ erDiagram
 - **JSONB**: Поле `content` в таблице `missions` и `playload` в таблице `user_missions` позволяют хранить гибкие данные в формате JSON.
 
 Эта структура базы данных поддерживает гибкую систему управления пользователями, миссиями, наградами и событиями, с акцентом на геймификацию и взаимодействие пользователей.
+
+
+# Supabase — Установка на сервер
+
+Инструкция по развёртыванию Supabase на собственном сервере (VPS/Dedicated). Основано на официальном руководстве [supabase/self-hosted](https://github.com/supabase/supabase).
+
+## Требования
+
+- Linux-сервер (Ubuntu/Debian/…).
+- Docker `>= 20.10`.
+- Docker Compose `>= 2.0`.
+- Минимум: 4 GB RAM, 2 CPU, 20 GB SSD.
+- Открытые порты: **80, 443** (и внутренние для сервисов).
+
+## 1) Установка Docker и Docker Compose
+
+```bash
+# Обновляем пакеты
+sudo apt-get update
+
+# Устанавливаем Docker
+curl -fsSL https://get.docker.com | sh
+
+# Проверяем
+docker --version
+
+# Устанавливаем Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.6/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Проверяем
+docker-compose --version
+```
+
+## 2) Клонирование репозитория Supabase
+
+```bash
+git clone https://github.com/supabase/supabase.git
+cd supabase/docker
+```
+
+## 3) Создание .env файла
+
+В корне папки `docker` создайте файл `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Отредактируйте переменные:  
+- `POSTGRES_PASSWORD` — пароль для базы данных  
+- `JWT_SECRET` — секрет для токенов  
+- `ANON_KEY`, `SERVICE_ROLE_KEY` — можно сгенерировать или использовать дефолтные  
+
+## 4) Запуск контейнеров
+
+```bash
+docker-compose up -d
+```
+
+Проверить логи:
+```bash
+docker-compose logs -f
+```
+
+## 5) Доступ к сервисам
+
+- API: `http://localhost:8000`
+- Studio: `http://localhost:3000`
+- Kong (reverse proxy): `http://localhost:8001`
+- Postgres: `localhost:5432`
+
+## 6) Остановка
+
+```bash
+docker-compose down
+```
+
+## 7) Обновление
+
+```bash
+git pull origin master
+docker-compose pull
+docker-compose up -d
+```
+
+---
+
+Теперь Supabase развернут локально на сервере и готов к использованию.

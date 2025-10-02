@@ -214,7 +214,7 @@ Future logbookNotifications(BuildContext context) async {
           // Form the message
           final message = rewards.isEmpty
               ? 'Поздравляем с выполнением! 🎈'
-              : 'Вы заработали:\n${rewards.join('\n')}';
+              : rewards.join('\n');
 
           // Add notification to queue
           dialogQueue.add({

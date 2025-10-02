@@ -53,7 +53,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           FadeEffect(
             curve: Curves.easeInOut,
             delay: 0.0.ms,
-            duration: 600.0.ms,
+            duration: 1000.0.ms,
             begin: 0.0,
             end: 1.0,
           ),
@@ -66,7 +66,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           FadeEffect(
             curve: Curves.easeInOut,
             delay: 0.0.ms,
-            duration: 600.0.ms,
+            duration: 1000.0.ms,
             begin: 0.0,
             end: 1.0,
           ),
@@ -79,18 +79,26 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           FadeEffect(
             curve: Curves.easeInOut,
             delay: 0.0.ms,
-            duration: 600.0.ms,
+            duration: 1000.0.ms,
             begin: 0.0,
             end: 1.0,
           ),
         ],
       ),
-      'imageOnActionTriggerAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onActionTrigger,
-        applyInitialState: true,
-        effectsBuilder: null,
-      ),
       'imageOnPageLoadAnimation4': AnimationInfo(
+        loop: true,
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          RotateEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 25000.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'imageOnPageLoadAnimation5': AnimationInfo(
         loop: true,
         reverse: true,
         trigger: AnimationTrigger.onPageLoad,
@@ -104,7 +112,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           ),
         ],
       ),
-      'imageOnPageLoadAnimation5': AnimationInfo(
+      'imageOnPageLoadAnimation6': AnimationInfo(
         loop: true,
         reverse: true,
         trigger: AnimationTrigger.onPageLoad,
@@ -119,12 +127,6 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
         ],
       ),
     });
-    setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
-      this,
-    );
   }
 
   @override
@@ -188,24 +190,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                   width: double.infinity,
                   fit: BoxFit.contain,
                 ),
-              ).animateOnActionTrigger(
-                animationsMap['imageOnActionTriggerAnimation']!,
-                effects: [
-                  RotateEffect(
-                    curve: Curves.easeInOut,
-                    delay: 0.0.ms,
-                    duration: 500.0.ms,
-                    begin: valueOrDefault<double>(
-                      _model.initialTurns,
-                      1.0,
-                    ),
-                    end: valueOrDefault<double>(
-                      _model.finalTurns,
-                      1.0,
-                    ),
-                  ),
-                ],
-              ),
+              ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation4']!),
             ),
             Align(
               alignment: AlignmentDirectional(-1.0, -1.0),
@@ -222,7 +207,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                       fit: BoxFit.cover,
                     ),
                   ).animateOnPageLoad(
-                      animationsMap['imageOnPageLoadAnimation4']!),
+                      animationsMap['imageOnPageLoadAnimation5']!),
                 ),
               ),
             ),
@@ -236,7 +221,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                   height: 90.0,
                   fit: BoxFit.cover,
                 ).animateOnPageLoad(
-                    animationsMap['imageOnPageLoadAnimation5']!),
+                    animationsMap['imageOnPageLoadAnimation6']!),
               ),
             ),
             Align(
@@ -523,14 +508,6 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                               onTap: () async {
                                 HapticFeedback.mediumImpact();
                                 if (_model.pageViewTextCurrentIndex < 3) {
-                                  if (animationsMap[
-                                          'imageOnActionTriggerAnimation'] !=
-                                      null) {
-                                    await animationsMap[
-                                            'imageOnActionTriggerAnimation']!
-                                        .controller
-                                        .forward(from: 0.0);
-                                  }
                                   if (_model.pageViewTextCurrentIndex > 0) {
                                     _model.initialTurns =
                                         _model.initialTurns + 0.3;

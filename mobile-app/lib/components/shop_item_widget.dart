@@ -129,7 +129,8 @@ class _ShopItemWidgetState extends State<ShopItemWidget>
                         Align(
                           alignment: AlignmentDirectional(0.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsets.all(30.0),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                30.0, 25.0, 30.0, 35.0),
                             child: CachedNetworkImage(
                               fadeInDuration: Duration(milliseconds: 0),
                               fadeOutDuration: Duration(milliseconds: 0),
@@ -192,6 +193,7 @@ class _ShopItemWidgetState extends State<ShopItemWidget>
                                                   .bodyLarge
                                                   .fontStyle,
                                         ),
+                                        fontSize: 15.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .bodyLarge

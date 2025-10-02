@@ -164,70 +164,30 @@ class _RewardGridItemWidgetState extends State<RewardGridItemWidget> {
                 ],
               ),
             ),
-            Builder(
-              builder: (context) {
-                if (widget!.isUnlocked) {
-                  return Text(
-                    valueOrDefault<String>(
-                      widget!.viewRewards?.name,
-                      'null',
-                    ),
-                    textAlign: TextAlign.center,
-                    style: FlutterFlowTheme.of(context).bodyLarge.override(
-                          font: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyLarge
-                                .fontStyle,
-                          ),
-                          color: colorFromCssString(
-                            widget!.viewRewards!.rarityColor!,
-                            defaultColor:
-                                FlutterFlowTheme.of(context).primaryText,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w500,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
-                        ),
-                  );
-                } else {
-                  return Opacity(
-                    opacity: 0.8,
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 6.0, 0.0, 0.0),
-                      child: Text(
-                        valueOrDefault<String>(
-                          widget!.viewRewards?.name,
-                          'null',
-                        ),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        style: FlutterFlowTheme.of(context).bodyLarge.override(
-                              font: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w500,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .fontStyle,
-                              ),
-                              color: colorFromCssString(
-                                widget!.viewRewards!.rarityColor!,
-                                defaultColor:
-                                    FlutterFlowTheme.of(context).primaryText,
-                              ),
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .fontStyle,
-                              lineHeight: 1.4,
-                            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+              child: Text(
+                valueOrDefault<String>(
+                  widget!.viewRewards?.name,
+                  'null',
+                ),
+                textAlign: TextAlign.center,
+                style: FlutterFlowTheme.of(context).bodyLarge.override(
+                      font: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w500,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodyLarge.fontStyle,
                       ),
+                      color: colorFromCssString(
+                        widget!.viewRewards!.rarityColor!,
+                        defaultColor: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      letterSpacing: 0.0,
+                      fontWeight: FontWeight.w500,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodyLarge.fontStyle,
                     ),
-                  );
-                }
-              },
+              ),
             ),
           ],
         ),

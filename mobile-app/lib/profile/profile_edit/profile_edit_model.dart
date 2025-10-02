@@ -48,6 +48,14 @@ class ProfileEditModel extends FlutterFlowModel<ProfileEditWidget> {
   String? Function(BuildContext, String?)? lastNameInputTextControllerValidator;
   // Model for DatePicker component.
   late DatePickerModel datePickerModel;
+  // State field(s) for NicknameInput widget.
+  FocusNode? nicknameInputFocusNode;
+  TextEditingController? nicknameInputTextController;
+  String? Function(BuildContext, String?)? nicknameInputTextControllerValidator;
+  // State field(s) for AboutMeInput widget.
+  FocusNode? aboutMeInputFocusNode;
+  TextEditingController? aboutMeInputTextController;
+  String? Function(BuildContext, String?)? aboutMeInputTextControllerValidator;
   // Model for ButtonBlue component.
   late ButtonBlueModel buttonBlueModel;
 
@@ -68,6 +76,12 @@ class ProfileEditModel extends FlutterFlowModel<ProfileEditWidget> {
     lastNameInputTextController?.dispose();
 
     datePickerModel.dispose();
+    nicknameInputFocusNode?.dispose();
+    nicknameInputTextController?.dispose();
+
+    aboutMeInputFocusNode?.dispose();
+    aboutMeInputTextController?.dispose();
+
     buttonBlueModel.dispose();
   }
 }

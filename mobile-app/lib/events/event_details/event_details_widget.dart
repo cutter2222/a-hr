@@ -3,17 +3,21 @@ import '/backend/supabase/supabase.dart';
 import '/components/bordered_container_widget.dart';
 import '/components/button_blue_widget.dart';
 import '/components/event_user_item_widget.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:math';
 import 'dart:ui';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -37,15 +41,116 @@ class EventDetailsWidget extends StatefulWidget {
   State<EventDetailsWidget> createState() => _EventDetailsWidgetState();
 }
 
-class _EventDetailsWidgetState extends State<EventDetailsWidget> {
+class _EventDetailsWidgetState extends State<EventDetailsWidget>
+    with TickerProviderStateMixin {
   late EventDetailsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => EventDetailsModel());
+
+    animationsMap.addAll({
+      'stackOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'columnOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'borderedContainerOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'borderedContainerOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'columnOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 500.0.ms,
+            begin: Offset(0.0, 32.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -300,7 +405,8 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                 ),
                                               ],
                                             ),
-                                          ),
+                                          ).animateOnPageLoad(animationsMap[
+                                              'stackOnPageLoadAnimation']!),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
@@ -352,7 +458,8 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                       ),
                                                 ),
                                               ],
-                                            ),
+                                            ).animateOnPageLoad(animationsMap[
+                                                'columnOnPageLoadAnimation1']!),
                                           ),
                                           if (queryViewEventsViewEventsRow
                                                       ?.location !=
@@ -382,7 +489,8 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                       .gradient1n2,
                                                   gradientAngle: 140.0,
                                                 ),
-                                              ),
+                                              ).animateOnPageLoad(animationsMap[
+                                                  'borderedContainerOnPageLoadAnimation1']!),
                                             ),
                                           if (queryViewEventsViewEventsRow
                                                       ?.description !=
@@ -412,7 +520,8 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                       .containerAccent,
                                                   gradientAngle: 140.0,
                                                 ),
-                                              ),
+                                              ).animateOnPageLoad(animationsMap[
+                                                  'borderedContainerOnPageLoadAnimation2']!),
                                             ),
                                           if (queryUserEventViewUserEventsRowList
                                               .isNotEmpty)
@@ -501,7 +610,8 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                     ),
                                                   ),
                                                 ],
-                                              ),
+                                              ).animateOnPageLoad(animationsMap[
+                                                  'columnOnPageLoadAnimation2']!),
                                             ),
                                         ],
                                       ),
